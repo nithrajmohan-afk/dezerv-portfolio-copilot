@@ -3,500 +3,62 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dezerv RM Copilot</title>
+  <title>Dezerv Portfolio Explainability Copilot</title>
   <style>
-    :root {
-      --bg: #f6f3ec;
-      --panel: #ffffff;
-      --ink: #171717;
-      --muted: #66665f;
-      --line: #e5dfd2;
-      --gold: #b58633;
-      --green: #0f7a4f;
-      --red: #b44646;
-      --blue: #244f82;
-      --shadow: 0 18px 45px rgba(30, 24, 12, 0.08);
-      --radius: 22px;
-    }
-
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top left, #fff7df 0, transparent 32%), var(--bg);
-      color: var(--ink);
-    }
-
-    header {
-      padding: 28px 42px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .logo {
-      width: 42px;
-      height: 42px;
-      border-radius: 13px;
-      background: linear-gradient(135deg, #161616, #76561c);
-      color: white;
-      display: grid;
-      place-items: center;
-      font-weight: 800;
-      letter-spacing: -1px;
-    }
-
-    .brand h1 { margin: 0; font-size: 20px; letter-spacing: -0.02em; }
-    .brand p { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
-
-    .badge {
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.68);
-      border-radius: 999px;
-      padding: 10px 14px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    main {
-      padding: 18px 42px 42px;
-      max-width: 1440px;
-      margin: auto;
-    }
-
-    .hero {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 22px;
-      align-items: stretch;
-      margin-bottom: 22px;
-    }
-
-    .card {
-      background: rgba(255,255,255,0.9);
-      border: 1px solid rgba(229,223,210,0.9);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    .intro {
-      padding: 32px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .intro:after {
-      content: "";
-      position: absolute;
-      right: -80px;
-      top: -100px;
-      width: 260px;
-      height: 260px;
-      border-radius: 50%;
-      background: rgba(181, 134, 51, 0.12);
-    }
-
-    .eyebrow { color: var(--gold); text-transform: uppercase; font-size: 12px; letter-spacing: 0.13em; font-weight: 750; }
-    .intro h2 { font-size: 44px; line-height: 1.02; letter-spacing: -0.05em; margin: 12px 0 14px; max-width: 760px; }
-    .intro p { color: var(--muted); font-size: 16px; line-height: 1.7; margin: 0; max-width: 760px; }
-
-    .metrics {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      margin-top: 28px;
-    }
-
-    .metric {
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 16px;
-      background: #fffaf0;
-    }
-    .metric b { display: block; font-size: 22px; letter-spacing: -0.04em; }
-    .metric span { color: var(--muted); font-size: 12px; }
-
-    .client-card { padding: 24px; }
-    .client-top { display:flex; justify-content:space-between; gap: 14px; align-items:flex-start; }
-    .client-name { font-size: 24px; font-weight: 780; letter-spacing:-0.03em; margin: 0; }
-    .client-meta { color: var(--muted); font-size: 13px; margin-top: 6px; }
-    .risk { background:#eef8f2; color: var(--green); border-radius:999px; padding:8px 10px; font-size:12px; font-weight:700; white-space:nowrap; }
-
-    .portfolio-bars { margin-top: 22px; display:grid; gap:12px; }
-    .bar-row { display:grid; grid-template-columns: 135px 1fr 46px; align-items:center; gap:12px; font-size:13px; }
-    .track { height: 11px; border-radius:999px; background:#eee8dd; overflow:hidden; }
-    .fill { height:100%; background: linear-gradient(90deg, #1d1d1d, #b58633); border-radius:999px; }
-    .bar-row span:last-child { text-align:right; color:var(--muted); }
-
-    .workspace {
-      display: grid;
-      grid-template-columns: 0.95fr 1.05fr;
-      gap: 22px;
-      align-items: start;
-    }
-
-    .section { padding: 24px; }
-    .section h3 { margin:0 0 6px; font-size:20px; letter-spacing:-0.03em; }
-    .section .sub { margin:0 0 20px; color:var(--muted); font-size:14px; line-height:1.5; }
-
-    .action-card {
-      border: 1px solid var(--line);
-      background: #fffdf8;
-      border-radius: 18px;
-      padding: 18px;
-      margin-bottom: 14px;
-      cursor: pointer;
-      transition: 0.18s ease;
-    }
-    .action-card:hover, .action-card.active { border-color: rgba(181,134,51,0.7); transform: translateY(-1px); box-shadow:0 12px 26px rgba(55,42,15,0.08); }
-    .action-head { display:flex; justify-content:space-between; gap:10px; align-items:center; }
-    .action-title { font-weight: 760; letter-spacing:-0.02em; }
-    .tag { font-size:11px; font-weight:760; padding:6px 9px; border-radius:999px; background:#f1eadc; color:#7a5a20; white-space:nowrap; }
-    .action-card p { color:var(--muted); line-height:1.5; font-size:13px; margin:10px 0 0; }
-
-    .delta {
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:10px;
-      margin-top:14px;
-    }
-    .delta div { background:white; border:1px solid var(--line); border-radius:14px; padding:12px; }
-    .delta small { color:var(--muted); display:block; margin-bottom:4px; }
-    .delta b { font-size:15px; }
-
-    .generator {
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top: 20px;
-    }
-    button {
-      border: 0;
-      border-radius: 14px;
-      padding: 13px 16px;
-      font-weight: 760;
-      cursor:pointer;
-      transition: 0.16s ease;
-    }
-    .primary { background: #171717; color:#fff; }
-    .secondary { background:#f2eadb; color:#5e4316; }
-    button:hover { transform: translateY(-1px); }
-
-    .output-tabs {
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      margin: 18px 0;
-    }
-    .tab {
-      border:1px solid var(--line);
-      background:white;
-      color:var(--muted);
-      padding:9px 12px;
-      border-radius:999px;
-      font-size:13px;
-      cursor:pointer;
-    }
-    .tab.active { background:#171717; color:white; border-color:#171717; }
-
-    .output-box {
-      min-height: 340px;
-      border:1px solid var(--line);
-      border-radius: 18px;
-      padding: 20px;
-      background:#fffdf8;
-      line-height:1.65;
-      white-space: pre-wrap;
-      font-size:14px;
-    }
-    .output-label { color:var(--gold); font-weight:800; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; margin-bottom: 10px; }
-
-    .qa-grid {
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:22px;
-      margin-top:22px;
-    }
-    .questions { display:grid; gap:10px; }
-    .question {
-      border:1px solid var(--line);
-      background:white;
-      border-radius:16px;
-      padding:14px;
-      cursor:pointer;
-      font-weight:700;
-      font-size:14px;
-    }
-    .question.active { border-color:var(--gold); background:#fffaf0; }
-    .answer { border:1px solid var(--line); background:#fffdf8; border-radius:18px; padding:20px; line-height:1.65; color:#2b2b2b; min-height:214px; }
-
-    .timeline { margin-top:22px; display:grid; gap:12px; }
-    .event { display:grid; grid-template-columns: 105px 1fr; gap:16px; border-top:1px solid var(--line); padding-top:14px; }
-    .event time { color:var(--muted); font-size:13px; }
-    .event b { display:block; margin-bottom:4px; }
-    .event p { margin:0; color:var(--muted); font-size:13px; line-height:1.5; }
-
-    .split-note {
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:14px;
-      margin-top: 18px;
-    }
-    .note-box { background:#fffaf0; border:1px solid var(--line); border-radius:16px; padding:15px; font-size:13px; line-height:1.5; }
-    .note-box b { display:block; margin-bottom:5px; }
-
-    footer { padding: 14px 42px 34px; color:var(--muted); font-size:12px; text-align:center; }
-
-    @media (max-width: 980px) {
-      header, main { padding-left: 18px; padding-right: 18px; }
-      .hero, .workspace, .qa-grid, .split-note { grid-template-columns: 1fr; }
-      .metrics { grid-template-columns: 1fr 1fr; }
-      .intro h2 { font-size:34px; }
-    }
+    :root{--bg:#f6f3ec;--panel:#fff;--ink:#171717;--muted:#67635b;--line:#e6dfd2;--gold:#b58633;--green:#0f7a4f;--red:#b44646;--blue:#244f82;--shadow:0 18px 45px rgba(30,24,12,.08);--radius:22px}
+    *{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:radial-gradient(circle at top left,#fff7df 0,transparent 34%),var(--bg);color:var(--ink)}
+    header{padding:26px 42px 16px;display:flex;align-items:center;justify-content:space-between;gap:22px;position:sticky;top:0;background:rgba(246,243,236,.82);backdrop-filter:blur(14px);z-index:10;border-bottom:1px solid rgba(230,223,210,.7)}
+    .brand{display:flex;align-items:center;gap:14px}.logo{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,#161616,#76561c);color:#fff;display:grid;place-items:center;font-weight:800;letter-spacing:-1px}.brand h1{margin:0;font-size:20px;letter-spacing:-.03em}.brand p{margin:2px 0 0;color:var(--muted);font-size:13px}
+    .view-switch{display:flex;gap:8px;background:#fff;border:1px solid var(--line);padding:6px;border-radius:999px;box-shadow:0 8px 22px rgba(30,24,12,.06)}.switch-btn{border:0;border-radius:999px;padding:11px 15px;font-weight:800;cursor:pointer;background:transparent;color:var(--muted)}.switch-btn.active{background:#171717;color:#fff}.badge{border:1px solid var(--line);background:rgba(255,255,255,.7);border-radius:999px;padding:10px 14px;color:var(--muted);font-size:13px}
+    main{padding:22px 42px 42px;max-width:1440px;margin:auto}.view{display:none}.view.active{display:block}.card{background:rgba(255,255,255,.92);border:1px solid rgba(230,223,210,.95);border-radius:var(--radius);box-shadow:var(--shadow)}.section{padding:24px}.section h3{margin:0 0 6px;font-size:20px;letter-spacing:-.03em}.sub{margin:0 0 20px;color:var(--muted);font-size:14px;line-height:1.55}.eyebrow{color:var(--gold);text-transform:uppercase;font-size:12px;letter-spacing:.13em;font-weight:800}
+    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;margin-bottom:22px}.intro{padding:32px;position:relative;overflow:hidden}.intro:after{content:"";position:absolute;right:-80px;top:-100px;width:260px;height:260px;border-radius:50%;background:rgba(181,134,51,.12)}.intro h2{font-size:44px;line-height:1.02;letter-spacing:-.05em;margin:12px 0 14px;max-width:780px}.intro p{color:var(--muted);font-size:16px;line-height:1.7;margin:0;max-width:820px}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:28px}.metric{border:1px solid var(--line);border-radius:18px;padding:16px;background:#fffaf0}.metric b{display:block;font-size:22px;letter-spacing:-.04em}.metric span{color:var(--muted);font-size:12px}
+    .client-card{padding:24px}.client-top{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}.client-name{font-size:24px;font-weight:800;letter-spacing:-.03em;margin:0}.client-meta{color:var(--muted);font-size:13px;margin-top:6px}.risk{background:#eef8f2;color:var(--green);border-radius:999px;padding:8px 10px;font-size:12px;font-weight:800;white-space:nowrap}.portfolio-bars{margin-top:22px;display:grid;gap:12px}.bar-row{display:grid;grid-template-columns:135px 1fr 46px;align-items:center;gap:12px;font-size:13px}.track{height:11px;border-radius:999px;background:#eee8dd;overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,#1d1d1d,#b58633);border-radius:999px}.bar-row span:last-child{text-align:right;color:var(--muted)}
+    .workspace{display:grid;grid-template-columns:.95fr 1.05fr;gap:22px;align-items:start}.action-card{border:1px solid var(--line);background:#fffdf8;border-radius:18px;padding:18px;margin-bottom:14px;cursor:pointer;transition:.18s}.action-card:hover,.action-card.active{border-color:rgba(181,134,51,.75);transform:translateY(-1px);box-shadow:0 12px 26px rgba(55,42,15,.08)}.action-head{display:flex;justify-content:space-between;gap:10px;align-items:center}.action-title{font-weight:800;letter-spacing:-.02em}.tag{font-size:11px;font-weight:800;padding:6px 9px;border-radius:999px;background:#f1eadc;color:#7a5a20;white-space:nowrap}.action-card p{color:var(--muted);line-height:1.5;font-size:13px;margin:10px 0 0}.delta{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}.delta div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px}.delta small{color:var(--muted);display:block;margin-bottom:4px}.delta b{font-size:15px}.generator{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}button{border:0;border-radius:14px;padding:13px 16px;font-weight:800;cursor:pointer;transition:.16s}.primary{background:#171717;color:#fff}.secondary{background:#f2eadb;color:#5e4316}button:hover{transform:translateY(-1px)}.output-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.tab{border:1px solid var(--line);background:#fff;color:var(--muted);padding:9px 12px;border-radius:999px;font-size:13px;cursor:pointer}.tab.active{background:#171717;color:#fff;border-color:#171717}.output-box{min-height:335px;border:1px solid var(--line);border-radius:18px;padding:20px;background:#fffdf8;line-height:1.65;white-space:pre-wrap;font-size:14px}.output-label{color:var(--gold);font-weight:800;font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}.qa-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:22px}.questions{display:grid;gap:10px}.question{border:1px solid var(--line);background:#fff;border-radius:16px;padding:14px;cursor:pointer;font-weight:800;font-size:14px}.question.active{border-color:var(--gold);background:#fffaf0}.answer{border:1px solid var(--line);background:#fffdf8;border-radius:18px;padding:20px;line-height:1.65;color:#2b2b2b;min-height:214px}.timeline{margin-top:22px;display:grid;gap:12px}.event{display:grid;grid-template-columns:105px 1fr;gap:16px;border-top:1px solid var(--line);padding-top:14px}.event time{color:var(--muted);font-size:13px}.event b{display:block;margin-bottom:4px}.event p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}.split-note{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}.note-box{background:#fffaf0;border:1px solid var(--line);border-radius:16px;padding:15px;font-size:13px;line-height:1.5}.note-box b{display:block;margin-bottom:5px}
+    .client-shell{max-width:1120px;margin:auto}.client-hero{display:grid;grid-template-columns:1fr .8fr;gap:22px;margin-bottom:22px}.client-panel{padding:30px}.client-panel h2{font-size:40px;line-height:1.05;letter-spacing:-.05em;margin:12px 0 12px}.client-panel p{color:var(--muted);line-height:1.7}.summary-list{display:grid;gap:12px;margin-top:20px}.summary-item{display:flex;justify-content:space-between;gap:16px;border:1px solid var(--line);background:#fffdf8;border-radius:16px;padding:15px}.summary-item span{color:var(--muted);font-size:13px}.summary-item b{font-size:16px}.decision-card{padding:24px}.decision-card h3{font-size:24px;letter-spacing:-.03em;margin:0 0 10px}.pill-row{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.pill{background:#f1eadc;color:#6e4f19;border-radius:999px;padding:8px 10px;font-size:12px;font-weight:800}.explain-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}.explain-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;line-height:1.55}.explain-card h4{margin:0 0 8px}.explain-card p{margin:0;color:var(--muted);font-size:14px}.client-body{display:grid;grid-template-columns:1fr .9fr;gap:22px}.movement{display:grid;grid-template-columns:1fr 1fr;gap:14px}.move-box{border:1px solid var(--line);background:#fffdf8;border-radius:18px;padding:18px}.move-box span{color:var(--muted);font-size:13px}.move-box b{display:block;font-size:32px;letter-spacing:-.05em;margin-top:4px}.client-faq{display:grid;gap:10px}.faq{border:1px solid var(--line);border-radius:16px;background:#fffdf8;padding:16px}.faq b{display:block;margin-bottom:7px}.faq p{margin:0;color:var(--muted);font-size:14px;line-height:1.6}.disclaimer{margin-top:18px;color:var(--muted);font-size:12px;line-height:1.5}.client-cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.quiet{background:#fff;border:1px solid var(--line);color:var(--muted)}
+    footer{padding:14px 42px 34px;color:var(--muted);font-size:12px;text-align:center}@media(max-width:980px){header{align-items:flex-start;flex-direction:column}header,main{padding-left:18px;padding-right:18px}.hero,.workspace,.qa-grid,.split-note,.client-hero,.client-body,.explain-grid{grid-template-columns:1fr}.metrics{grid-template-columns:1fr 1fr}.intro h2,.client-panel h2{font-size:34px}.view-switch{width:100%;justify-content:space-between}.switch-btn{flex:1}}
   </style>
 </head>
 <body>
-  <header>
-    <div class="brand">
-      <div class="logo">D</div>
-      <div>
-        <h1>Dezerv RM Copilot</h1>
-        <p>Advisor-facing tool to explain portfolio decisions faster</p>
-      </div>
+<header>
+  <div class="brand"><div class="logo">D</div><div><h1>Dezerv Portfolio Explainability Copilot</h1><p>Advisor workspace + client-facing explanation layer</p></div></div>
+  <div class="view-switch"><button class="switch-btn active" data-view="rmView">RM View</button><button class="switch-btn" data-view="clientView">Client View</button></div>
+  <div class="badge">Prototype with mock data</div>
+</header>
+<main>
+<section id="rmView" class="view active">
+  <section class="hero">
+    <div class="card intro"><div class="eyebrow">Relationship Manager Workspace</div><h2>Turn investment actions into client-ready explanations in seconds.</h2><p>Active portfolio management builds trust only when clients understand the rationale behind every change. This copilot helps an RM convert investment committee notes into WhatsApp messages, email drafts, advisor talking points, and client Q&A responses.</p><div class="metrics"><div class="metric"><b>₹8.4 Cr</b><span>Client AUM</span></div><div class="metric"><b>3</b><span>Recent actions</span></div><div class="metric"><b>12%</b><span>Risk reduction target</span></div><div class="metric"><b>60 sec</b><span>RM prep time</span></div></div></div>
+    <aside class="card client-card"><div class="client-top"><div><h2 class="client-name">Rajesh Gupta</h2><div class="client-meta">HNI investor · Growth with capital preservation · Moderate-aggressive</div></div><div class="risk">On-track</div></div><div class="portfolio-bars"><div class="bar-row"><span>Equity PMS</span><div class="track"><div class="fill" style="width:42%"></div></div><span>42%</span></div><div class="bar-row"><span>Mutual Funds</span><div class="track"><div class="fill" style="width:28%"></div></div><span>28%</span></div><div class="bar-row"><span>Debt</span><div class="track"><div class="fill" style="width:18%"></div></div><span>18%</span></div><div class="bar-row"><span>Cash/T-bills</span><div class="track"><div class="fill" style="width:12%"></div></div><span>12%</span></div></div><div class="split-note"><div class="note-box"><b>Advisor sees</b>Investment rationale, risk context, talking points, and editable communication drafts.</div><div class="note-box"><b>Client receives</b>A simplified approved explanation. Internal notes are never shown.</div></div></aside>
+  </section>
+  <section class="workspace">
+    <div class="card section"><h3>Recent investment actions</h3><p class="sub">Select an action. The copilot prepares communication for the RM to review before sending.</p>
+      <div class="action-card active" data-action="financials"><div class="action-head"><div class="action-title">Reduced Financial Services exposure</div><div class="tag">Needs client update</div></div><p>Allocation reduced from 18% to 12% after valuation expansion and weaker earnings revisions.</p><div class="delta"><div><small>Before</small><b>18%</b></div><div><small>After</small><b>12%</b></div><div><small>Impact</small><b>-12% volatility</b></div></div></div>
+      <div class="action-card" data-action="cash"><div class="action-head"><div class="action-title">Increased cash/T-bill allocation</div><div class="tag">Opportunity reserve</div></div><p>Cash allocation increased from 7% to 12% to preserve liquidity for market dislocations.</p><div class="delta"><div><small>Before</small><b>7%</b></div><div><small>After</small><b>12%</b></div><div><small>Impact</small><b>Higher liquidity</b></div></div></div>
+      <div class="action-card" data-action="midcap"><div class="action-head"><div class="action-title">Trimmed mid-cap momentum basket</div><div class="tag">Risk control</div></div><p>Partial profit booking after sharp run-up to avoid concentration in crowded momentum names.</p><div class="delta"><div><small>Before</small><b>16%</b></div><div><small>After</small><b>11%</b></div><div><small>Impact</small><b>Lower drawdown</b></div></div></div>
+      <div class="timeline"><div class="event"><time>Today</time><div><b>RM brief generated</b><p>Client-ready explanation, FAQs, and talking points prepared for review.</p></div></div><div class="event"><time>Yesterday</time><div><b>Investment team note added</b><p>Valuation risk and weaker earnings revisions flagged for Financial Services exposure.</p></div></div><div class="event"><time>Last week</time><div><b>Portfolio rebalance executed</b><p>Reduced sector concentration and increased tactical liquidity.</p></div></div></div>
     </div>
-    <div class="badge">Prototype with mock portfolio data</div>
-  </header>
-
-  <main>
-    <section class="hero">
-      <div class="card intro">
-        <div class="eyebrow">Relationship Manager Workspace</div>
-        <h2>Turn investment actions into client-ready explanations in seconds.</h2>
-        <p>
-          Active portfolio management builds trust only when clients understand the rationale behind every change.
-          This copilot helps an RM convert investment committee notes into WhatsApp messages, email drafts, advisor talking points, and client Q&A responses.
-        </p>
-        <div class="metrics">
-          <div class="metric"><b>₹8.4 Cr</b><span>Client AUM</span></div>
-          <div class="metric"><b>3</b><span>Recent actions</span></div>
-          <div class="metric"><b>12%</b><span>Risk reduction target</span></div>
-          <div class="metric"><b>60 sec</b><span>RM prep time</span></div>
-        </div>
-      </div>
-
-      <aside class="card client-card">
-        <div class="client-top">
-          <div>
-            <h2 class="client-name">Rajesh Gupta</h2>
-            <div class="client-meta">HNI investor · Growth with capital preservation · Moderate-aggressive</div>
-          </div>
-          <div class="risk">On-track</div>
-        </div>
-        <div class="portfolio-bars">
-          <div class="bar-row"><span>Equity PMS</span><div class="track"><div class="fill" style="width:42%"></div></div><span>42%</span></div>
-          <div class="bar-row"><span>Mutual Funds</span><div class="track"><div class="fill" style="width:28%"></div></div><span>28%</span></div>
-          <div class="bar-row"><span>Debt</span><div class="track"><div class="fill" style="width:18%"></div></div><span>18%</span></div>
-          <div class="bar-row"><span>Cash/T-bills</span><div class="track"><div class="fill" style="width:12%"></div></div><span>12%</span></div>
-        </div>
-        <div class="split-note">
-          <div class="note-box"><b>Advisor sees</b>Portfolio action, rationale, risk context, talking points, and editable communication drafts.</div>
-          <div class="note-box"><b>Client receives</b>Only the final approved WhatsApp/email explanation from the RM, not internal notes.</div>
-        </div>
-      </aside>
+    <div class="card section"><h3>Communication copilot</h3><p class="sub">Outputs are meant to aid the advisor. The RM reviews, edits, and sends the final message to the client.</p><div class="generator"><button class="primary" id="generateBtn">Generate client communication</button><button class="secondary" id="copyBtn">Copy current draft</button></div><div class="output-tabs"><div class="tab active" data-tab="whatsapp">WhatsApp</div><div class="tab" data-tab="email">Email</div><div class="tab" data-tab="advisor">Advisor notes</div><div class="tab" data-tab="client">Client preview</div></div><div class="output-box" id="outputBox"></div></div>
+  </section>
+  <section class="card section qa-grid"><div><h3>Client question simulator</h3><p class="sub">Likely follow-up questions the RM may receive after the portfolio change.</p><div class="questions"><div class="question active" data-q="why">Why did we reduce this exposure now?</div><div class="question" data-q="upside">Will I miss out if the sector keeps rising?</div><div class="question" data-q="friend">Why is my portfolio different from my friend's?</div><div class="question" data-q="cash">Why are we holding more cash?</div></div></div><div><h3>Suggested RM response</h3><p class="sub">Answer style: clear, non-technical, confidence-building.</p><div class="answer" id="answerBox"></div></div></section>
+</section>
+<section id="clientView" class="view">
+  <div class="client-shell">
+    <section class="client-hero">
+      <div class="card client-panel"><div class="eyebrow">Client-facing portfolio update</div><h2>Your portfolio was rebalanced to reduce concentration risk.</h2><p>Rajesh, your portfolio remains aligned to long-term growth. We made one adjustment to protect gains from a strong sector run-up and improve resilience if markets become volatile.</p><div class="client-cta"><button class="primary">Schedule a call with your RM</button><button class="quiet">Download update</button></div></div>
+      <aside class="card client-card"><div class="client-top"><div><h2 class="client-name">Portfolio snapshot</h2><div class="client-meta">Updated today · Approved by your Dezerv RM</div></div><div class="risk">On-track</div></div><div class="summary-list"><div class="summary-item"><span>Portfolio value</span><b>₹8.4 Cr</b></div><div class="summary-item"><span>Risk profile</span><b>Moderate-aggressive</b></div><div class="summary-item"><span>Latest change</span><b>Sector exposure reduced</b></div><div class="summary-item"><span>Goal impact</span><b>No change</b></div></div></aside>
     </section>
+    <section class="card decision-card"><div class="eyebrow">What changed</div><h3>Financial Services exposure reduced from 18% to 12%</h3><p class="sub">This is a risk-management rebalance, not a full exit from the sector.</p><div class="movement"><div class="move-box"><span>Earlier allocation</span><b>18%</b></div><div class="move-box"><span>Current allocation</span><b>12%</b></div></div><div class="pill-row"><span class="pill">Protect gains</span><span class="pill">Reduce concentration</span><span class="pill">Maintain long-term growth</span></div><div class="explain-grid"><div class="explain-card"><h4>Why we did this</h4><p>The sector has performed well, but valuations now leave less room for error while earnings revisions have softened.</p></div><div class="explain-card"><h4>How it helps you</h4><p>Your portfolio is less dependent on one sector, which improves resilience if markets become volatile.</p></div><div class="explain-card"><h4>What stays the same</h4><p>Your long-term investment plan remains unchanged. You still have equity exposure, just at a more balanced weight.</p></div></div></section>
+    <section class="client-body" style="margin-top:22px"><div class="card section"><h3>Plain-English explanation</h3><p class="sub">The decision in simple terms.</p><div class="output-box" style="min-height:230px">We are not trying to time the market perfectly. Financial Services has been a meaningful contributor to your portfolio, but after the recent rally, the risk-reward has become less attractive.
 
-    <section class="workspace">
-      <div class="card section">
-        <h3>Recent investment actions</h3>
-        <p class="sub">Select an action. The copilot prepares communication for the RM to review before sending.</p>
-
-        <div class="action-card active" data-action="financials">
-          <div class="action-head">
-            <div class="action-title">Reduced Financial Services exposure</div>
-            <div class="tag">Needs client update</div>
-          </div>
-          <p>Allocation reduced from 18% to 12% after valuation expansion and weaker earnings revisions.</p>
-          <div class="delta">
-            <div><small>Before</small><b>18%</b></div>
-            <div><small>After</small><b>12%</b></div>
-            <div><small>Impact</small><b>-12% volatility</b></div>
-          </div>
-        </div>
-
-        <div class="action-card" data-action="cash">
-          <div class="action-head">
-            <div class="action-title">Increased cash/T-bill allocation</div>
-            <div class="tag">Opportunity reserve</div>
-          </div>
-          <p>Cash allocation increased from 7% to 12% to preserve liquidity for market dislocations.</p>
-          <div class="delta">
-            <div><small>Before</small><b>7%</b></div>
-            <div><small>After</small><b>12%</b></div>
-            <div><small>Impact</small><b>Higher liquidity</b></div>
-          </div>
-        </div>
-
-        <div class="action-card" data-action="midcap">
-          <div class="action-head">
-            <div class="action-title">Trimmed mid-cap momentum basket</div>
-            <div class="tag">Risk control</div>
-          </div>
-          <p>Partial profit booking after sharp run-up to avoid concentration in crowded momentum names.</p>
-          <div class="delta">
-            <div><small>Before</small><b>16%</b></div>
-            <div><small>After</small><b>11%</b></div>
-            <div><small>Impact</small><b>Lower drawdown</b></div>
-          </div>
-        </div>
-
-        <div class="timeline">
-          <div class="event"><time>Today</time><div><b>RM brief generated</b><p>Client-ready explanation, FAQs, and talking points prepared for review.</p></div></div>
-          <div class="event"><time>Yesterday</time><div><b>Investment team note added</b><p>Valuation risk and weaker earnings revisions flagged for Financial Services exposure.</p></div></div>
-          <div class="event"><time>Last week</time><div><b>Portfolio rebalance executed</b><p>Reduced sector concentration and increased tactical liquidity.</p></div></div>
-        </div>
-      </div>
-
-      <div class="card section">
-        <h3>Communication copilot</h3>
-        <p class="sub">Outputs are meant to aid the advisor. The RM reviews, edits, and sends the final message to the client.</p>
-
-        <div class="generator">
-          <button class="primary" id="generateBtn">Generate client communication</button>
-          <button class="secondary" id="copyBtn">Copy current draft</button>
-        </div>
-
-        <div class="output-tabs">
-          <div class="tab active" data-tab="whatsapp">WhatsApp</div>
-          <div class="tab" data-tab="email">Email</div>
-          <div class="tab" data-tab="advisor">Advisor notes</div>
-          <div class="tab" data-tab="client">Client preview</div>
-        </div>
-
-        <div class="output-box" id="outputBox"></div>
-      </div>
-    </section>
-
-    <section class="card section qa-grid">
-      <div>
-        <h3>Client question simulator</h3>
-        <p class="sub">Likely follow-up questions the RM may receive after the portfolio change.</p>
-        <div class="questions">
-          <div class="question active" data-q="why">Why did we reduce this exposure now?</div>
-          <div class="question" data-q="upside">Will I miss out if the sector keeps rising?</div>
-          <div class="question" data-q="friend">Why is my portfolio different from my friend’s?</div>
-          <div class="question" data-q="cash">Why are we holding more cash?</div>
-        </div>
-      </div>
-      <div>
-        <h3>Suggested RM response</h3>
-        <p class="sub">Answer style: clear, non-technical, confidence-building.</p>
-        <div class="answer" id="answerBox"></div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    Concept prototype · Uses mock data only · Designed to demonstrate an advisor-assisted workflow for active portfolio management communication
-  </footer>
-
+By reducing exposure from 18% to 12%, we protect part of the gains, reduce the impact of any sector-specific correction, and keep capital available for better opportunities. You still participate in the sector, but at a weight that better matches your risk profile.</div><p class="disclaimer">This is a demo screen with mock data. In a real product, the client view would only show RM-approved explanations.</p></div><div class="card section"><h3>Questions you may have</h3><p class="sub">Client-facing FAQs that reduce follow-up anxiety.</p><div class="client-faq"><div class="faq"><b>Will I miss out if the sector keeps rising?</b><p>You still have exposure, but at a more balanced level. The aim is to avoid over-dependence on one sector.</p></div><div class="faq"><b>Does this change my financial goals?</b><p>No. Your goal plan remains on track. This is a portfolio-level adjustment to manage risk.</p></div><div class="faq"><b>Why hold more cash/T-bills?</b><p>It gives the investment team flexibility to deploy when better opportunities emerge.</p></div></div></div></section>
+  </div>
+</section>
+</main>
+<footer>Concept prototype · Uses mock data only · Demonstrates RM-assisted communication and client-facing portfolio explainability</footer>
 <script>
-  const data = {
-    financials: {
-      label: 'Reduced Financial Services exposure',
-      whatsapp: `Hi Rajesh, quick portfolio update from our side.\n\nWe have reduced your Financial Services exposure from 18% to 12%. The sector has performed well, but valuations now leave less room for error while earnings revisions have started softening.\n\nThis is not a negative view on the long-term opportunity. It is a risk-management action to protect gains, reduce concentration, and keep your portfolio better positioned for future opportunities.`,
-      email: `Subject: Portfolio update: Financial Services exposure reduced\n\nHi Rajesh,\n\nWe wanted to share a brief update on your portfolio. As part of the latest rebalance, we reduced your Financial Services exposure from 18% to 12%.\n\nWhy we made this change:\n• Valuations in parts of the sector have expanded meaningfully after the recent rally.\n• Earnings revisions have started moderating, which reduces the near-term risk-reward.\n• Your portfolio had become relatively concentrated in this sector versus your target risk profile.\n\nWhat this means for you:\nThis move helps protect the gains already made, lowers portfolio volatility, and creates more flexibility to deploy capital if better opportunities emerge. We continue to remain invested in high-quality long-term opportunities, but with a more balanced allocation.\n\nHappy to walk you through this in more detail.\n\nRegards,\nYour Dezerv Relationship Manager`,
-      advisor: `Internal advisor notes\n\nClient context:\nRajesh is comfortable with growth, but usually reacts strongly to unexplained drawdowns. Keep the explanation focused on discipline, not fear.\n\nInvestment rationale:\n• Reduced Financial Services allocation from 18% to 12%.\n• Trigger: valuation expansion + weaker earnings revision trend.\n• Goal: reduce concentration risk and protect gains.\n• Important framing: not exiting the sector; resizing exposure.\n\nRecommended talk track:\n“We are not trying to time the market perfectly. We are making sure the portfolio does not become over-dependent on one sector after a sharp rally.”\n\nLikely objection:\n“What if it keeps going up?”\n\nResponse:\n“We still retain exposure, but at a more appropriate weight. The objective is not to capture every last percentage point of upside; it is to compound wealth with controlled risk.”`,
-      client: `What Rajesh sees\n\nPortfolio update\nFinancial Services exposure reduced from 18% to 12%.\n\nWhy this was done\nThe sector has performed well, but valuations have become less attractive. We reduced exposure to protect gains and lower concentration risk.\n\nHow it helps\nYour portfolio remains invested for long-term growth, while becoming less exposed to a single sector. This improves resilience if markets turn volatile.`
-    },
-    cash: {
-      label: 'Increased cash/T-bill allocation',
-      whatsapp: `Hi Rajesh, we have increased the cash/T-bill allocation in your portfolio from 7% to 12%.\n\nThis gives us more flexibility to act quickly if markets correct or if attractive opportunities emerge. The intent is not to stay idle, but to keep dry powder ready while avoiding forced decisions in an overheated market.`,
-      email: `Subject: Portfolio update: tactical liquidity increased\n\nHi Rajesh,\n\nAs part of the latest portfolio review, we increased your cash/T-bill allocation from 7% to 12%.\n\nWhy we made this change:\n• Several risk assets have rallied sharply.\n• Near-term market volatility may create better entry opportunities.\n• A higher liquidity buffer gives us flexibility without materially changing your long-term plan.\n\nThis is a tactical allocation, not a shift away from your growth objective. We will look to redeploy this capital when the risk-reward becomes more attractive.\n\nRegards,\nYour Dezerv Relationship Manager`,
-      advisor: `Internal advisor notes\n\nFrame this as “optionality”, not caution.\n\nKey points:\n• Cash/T-bills moved from 7% to 12%.\n• Purpose: dry powder for volatility-driven opportunities.\n• Avoid saying “we are bearish.”\n• Say “we are being selective after a strong rally.”\n\nClient concern to anticipate:\n“Is cash dragging returns?”\n\nResponse:\n“A measured cash position can improve long-term outcomes if it allows us to deploy during dislocations instead of chasing rallies.”`,
-      client: `What Rajesh sees\n\nPortfolio update\nCash/T-bill allocation increased from 7% to 12%.\n\nWhy this was done\nWe want to keep capital ready for better entry points if markets become volatile.\n\nHow it helps\nThis improves flexibility without changing your long-term investment objective.`
-    },
-    midcap: {
-      label: 'Trimmed mid-cap momentum basket',
-      whatsapp: `Hi Rajesh, we have trimmed part of the mid-cap momentum basket after a strong run-up.\n\nThis is a profit-protection step. We continue to participate in long-term growth, but have reduced exposure to crowded names where the near-term upside no longer justifies the risk.`,
-      email: `Subject: Portfolio update: mid-cap exposure trimmed\n\nHi Rajesh,\n\nWe have trimmed the mid-cap momentum basket in your portfolio from 16% to 11%.\n\nWhy we made this change:\n• The basket has delivered strong gains.\n• Some positions have become crowded after the recent rally.\n• Risk-reward is less attractive at current prices.\n\nThis is not a complete exit. It is a disciplined rebalance to lock in part of the gains and keep your portfolio aligned to your target risk profile.\n\nRegards,\nYour Dezerv Relationship Manager`,
-      advisor: `Internal advisor notes\n\nPosition this as disciplined profit booking.\n\nKey points:\n• Reduced mid-cap momentum basket from 16% to 11%.\n• Protects gains after a strong run.\n• Reduces exposure to crowded trades.\n• Retains participation through core equity allocation.\n\nPhrase to use:\n“We are taking some money off the table where the risk-reward has become less attractive, while continuing to stay invested in the broader growth story.”`,
-      client: `What Rajesh sees\n\nPortfolio update\nMid-cap momentum exposure reduced from 16% to 11%.\n\nWhy this was done\nThe allocation has performed well, and we are protecting part of the gains after a sharp rally.\n\nHow it helps\nYour portfolio remains exposed to growth, but with less downside risk from crowded positions.`
-    }
-  };
-
-  const answers = {
-    why: `We reduced the exposure now because the sector has already had a strong run. When valuations rise faster than earnings expectations, the margin of safety reduces. The portfolio still has exposure to the sector, but at a weight that is more appropriate for Rajesh’s risk profile.`,
-    upside: `There is always a chance the sector continues to rise in the short term. The decision is not about exiting completely; it is about avoiding over-concentration. Rajesh still participates in upside, but the portfolio is less vulnerable if the sector corrects.`,
-    friend: `Each Dezerv portfolio should reflect the client’s risk profile, liquidity needs, investment horizon, and existing exposures. Two clients may own similar assets but at different weights because their total financial picture is different.`,
-    cash: `The additional cash/T-bill allocation is meant to create flexibility. It allows the investment team to deploy quickly if markets correct or if a more attractive opportunity appears, instead of being forced to sell existing positions at the wrong time.`
-  };
-
-  let currentAction = 'financials';
-  let currentTab = 'whatsapp';
-  const outputBox = document.getElementById('outputBox');
-  const answerBox = document.getElementById('answerBox');
-
-  function renderOutput() {
-    const labelMap = { whatsapp: 'WhatsApp draft', email: 'Email draft', advisor: 'Advisor notes', client: 'Client preview' };
-    outputBox.innerHTML = `<div class="output-label">${labelMap[currentTab]}</div>${data[currentAction][currentTab]}`;
-  }
-
-  function renderAnswer(q = 'why') {
-    answerBox.textContent = answers[q];
-  }
-
-  document.querySelectorAll('.action-card').forEach(card => {
-    card.addEventListener('click', () => {
-      document.querySelectorAll('.action-card').forEach(c => c.classList.remove('active'));
-      card.classList.add('active');
-      currentAction = card.dataset.action;
-      renderOutput();
-    });
-  });
-
-  document.querySelectorAll('.tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      currentTab = tab.dataset.tab;
-      renderOutput();
-    });
-  });
-
-  document.querySelectorAll('.question').forEach(q => {
-    q.addEventListener('click', () => {
-      document.querySelectorAll('.question').forEach(x => x.classList.remove('active'));
-      q.classList.add('active');
-      renderAnswer(q.dataset.q);
-    });
-  });
-
-  document.getElementById('generateBtn').addEventListener('click', () => {
-    outputBox.style.opacity = 0.25;
-    setTimeout(() => { outputBox.style.opacity = 1; renderOutput(); }, 260);
-  });
-
-  document.getElementById('copyBtn').addEventListener('click', async () => {
-    const text = data[currentAction][currentTab];
-    try {
-      await navigator.clipboard.writeText(text);
-      const original = document.getElementById('copyBtn').textContent;
-      document.getElementById('copyBtn').textContent = 'Copied';
-      setTimeout(() => document.getElementById('copyBtn').textContent = original, 1200);
-    } catch (e) {
-      alert('Copy failed. Please select the text manually.');
-    }
-  });
-
-  renderOutput();
-  renderAnswer();
+const data={financials:{whatsapp:`Hi Rajesh, quick portfolio update from our side.\n\nWe have reduced your Financial Services exposure from 18% to 12%. The sector has performed well, but valuations now leave less room for error while earnings revisions have started softening.\n\nThis is not a negative view on the long-term opportunity. It is a risk-management action to protect gains, reduce concentration, and keep your portfolio better positioned for future opportunities.`,email:`Subject: Portfolio update: Financial Services exposure reduced\n\nHi Rajesh,\n\nWe wanted to share a brief update on your portfolio. As part of the latest rebalance, we reduced your Financial Services exposure from 18% to 12%.\n\nWhy we made this change:\n• Valuations in parts of the sector have expanded meaningfully after the recent rally.\n• Earnings revisions have started moderating, which reduces the near-term risk-reward.\n• Your portfolio had become relatively concentrated in this sector versus your target risk profile.\n\nWhat this means for you:\nThis move helps protect the gains already made, lowers portfolio volatility, and creates more flexibility to deploy capital if better opportunities emerge. We continue to remain invested in high-quality long-term opportunities, but with a more balanced allocation.\n\nHappy to walk you through this in more detail.\n\nRegards,\nYour Dezerv Relationship Manager`,advisor:`Internal advisor notes\n\nClient context:\nRajesh is comfortable with growth, but usually reacts strongly to unexplained drawdowns. Keep the explanation focused on discipline, not fear.\n\nInvestment rationale:\n• Reduced Financial Services allocation from 18% to 12%.\n• Trigger: valuation expansion + weaker earnings revision trend.\n• Goal: reduce concentration risk and protect gains.\n• Important framing: not exiting the sector; resizing exposure.\n\nRecommended talk track:\n“We are not trying to time the market perfectly. We are making sure the portfolio does not become over-dependent on one sector after a sharp rally.”`,client:`What Rajesh sees\n\nPortfolio update\nFinancial Services exposure reduced from 18% to 12%.\n\nWhy this was done\nThe sector has performed well, but valuations have become less attractive. We reduced exposure to protect gains and lower concentration risk.\n\nHow it helps\nYour portfolio remains invested for long-term growth, while becoming less exposed to a single sector.`},cash:{whatsapp:`Hi Rajesh, we have increased the cash/T-bill allocation in your portfolio from 7% to 12%.\n\nThis gives us more flexibility to act quickly if markets correct or if attractive opportunities emerge. The intent is not to stay idle, but to keep dry powder ready while avoiding forced decisions in an overheated market.`,email:`Subject: Portfolio update: tactical liquidity increased\n\nHi Rajesh,\n\nAs part of the latest portfolio review, we increased your cash/T-bill allocation from 7% to 12%.\n\nWhy we made this change:\n• Several risk assets have rallied sharply.\n• Near-term market volatility may create better entry opportunities.\n• A higher liquidity buffer gives us flexibility without materially changing your long-term plan.\n\nThis is a tactical allocation, not a shift away from your growth objective.`,advisor:`Internal advisor notes\n\nFrame this as “optionality”, not caution.\n\nKey points:\n• Cash/T-bills moved from 7% to 12%.\n• Purpose: dry powder for volatility-driven opportunities.\n• Avoid saying “we are bearish.”\n• Say “we are being selective after a strong rally.”`,client:`What Rajesh sees\n\nPortfolio update\nCash/T-bill allocation increased from 7% to 12%.\n\nWhy this was done\nWe want to keep capital ready for better entry points if markets become volatile.\n\nHow it helps\nThis improves flexibility without changing your long-term investment objective.`},midcap:{whatsapp:`Hi Rajesh, we have trimmed part of the mid-cap momentum basket after a strong run-up.\n\nThis is a profit-protection step. We continue to participate in long-term growth, but have reduced exposure to crowded names where the near-term upside no longer justifies the risk.`,email:`Subject: Portfolio update: mid-cap exposure trimmed\n\nHi Rajesh,\n\nWe have trimmed the mid-cap momentum basket in your portfolio from 16% to 11%.\n\nWhy we made this change:\n• The basket has delivered strong gains.\n• Some positions have become crowded after the recent rally.\n• Risk-reward is less attractive at current prices.`,advisor:`Internal advisor notes\n\nPosition this as disciplined profit booking.\n\nKey points:\n• Reduced mid-cap momentum basket from 16% to 11%.\n• Protects gains after a strong run.\n• Reduces exposure to crowded trades.\n• Retains participation through core equity allocation.`,client:`What Rajesh sees\n\nPortfolio update\nMid-cap momentum exposure reduced from 16% to 11%.\n\nWhy this was done\nThe allocation has performed well, and we are protecting part of the gains after a sharp rally.\n\nHow it helps\nYour portfolio remains exposed to growth, but with less downside risk from crowded positions.`}};
+const answers={why:`We reduced the exposure now because the sector has already had a strong run. When valuations rise faster than earnings expectations, the margin of safety reduces. The portfolio still has exposure to the sector, but at a weight that is more appropriate for Rajesh's risk profile.`,upside:`There is always a chance the sector continues to rise in the short term. The decision is not about exiting completely; it is about avoiding over-concentration. Rajesh still participates in upside, but the portfolio is less vulnerable if the sector corrects.`,friend:`Each Dezerv portfolio should reflect the client's risk profile, liquidity needs, investment horizon, and existing exposures. Two clients may own similar assets but at different weights because their total financial picture is different.`,cash:`The additional cash/T-bill allocation is meant to create flexibility. It allows the investment team to deploy quickly if markets correct or if a more attractive opportunity appears.`};
+let currentAction='financials',currentTab='whatsapp';const outputBox=document.getElementById('outputBox'),answerBox=document.getElementById('answerBox');function renderOutput(){const labelMap={whatsapp:'WhatsApp draft',email:'Email draft',advisor:'Advisor notes',client:'Client preview'};outputBox.innerHTML=`<div class="output-label">${labelMap[currentTab]}</div>${data[currentAction][currentTab]}`}function renderAnswer(q='why'){answerBox.textContent=answers[q]}document.querySelectorAll('.action-card').forEach(card=>card.addEventListener('click',()=>{document.querySelectorAll('.action-card').forEach(c=>c.classList.remove('active'));card.classList.add('active');currentAction=card.dataset.action;renderOutput()}));document.querySelectorAll('.tab').forEach(tab=>tab.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));tab.classList.add('active');currentTab=tab.dataset.tab;renderOutput()}));document.querySelectorAll('.question').forEach(q=>q.addEventListener('click',()=>{document.querySelectorAll('.question').forEach(x=>x.classList.remove('active'));q.classList.add('active');renderAnswer(q.dataset.q)}));document.querySelectorAll('.switch-btn').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.switch-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(btn.dataset.view).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}));document.getElementById('generateBtn').addEventListener('click',()=>{outputBox.style.opacity=.25;setTimeout(()=>{outputBox.style.opacity=1;renderOutput()},260)});document.getElementById('copyBtn').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(data[currentAction][currentTab]);const o=document.getElementById('copyBtn').textContent;document.getElementById('copyBtn').textContent='Copied';setTimeout(()=>document.getElementById('copyBtn').textContent=o,1200)}catch(e){alert('Copy failed. Please select the text manually.')}});renderOutput();renderAnswer();
 </script>
 </body>
 </html>

@@ -1,18 +1,14 @@
-# Dezerv RM Copilot
+# Dezerv Portfolio Explainability Copilot
 
-Advisor-facing prototype for active portfolio management communication.
+A single-page prototype showing two connected experiences:
 
-## What it demonstrates
+1. **RM View** - an advisor-facing workspace that turns investment actions into WhatsApp drafts, email drafts, advisor notes, and client Q&A responses.
+2. **Client View** - a simplified client-facing portfolio update that explains what changed, why it changed, and how it helps the investor.
 
-- A relationship manager sees a mock HNI client portfolio.
-- The RM selects a recent investment action.
-- The copilot generates WhatsApp, email, advisor notes, and client preview outputs.
-- A client question simulator helps the RM prepare for likely follow-ups.
+## How to deploy on GitHub Pages
 
-## Intended product direction
+Replace the existing files in your `dezerv-portfolio-copilot` repository with this `index.html` and `README.md`, then commit the changes. GitHub Pages will redeploy automatically.
 
-This is not a self-serve robo-advisor. It is an advisor-assisted copilot designed to help Dezerv RMs explain portfolio decisions faster and more consistently, while keeping the final communication reviewed and approved by the advisor.
+## Demo flow
 
-## Deployment
-
-Upload `index.html` and `README.md` to the existing GitHub repository root. GitHub Pages will redeploy automatically.
+Open the prototype and start with **RM View**. Show the recent investment action, generate client communication, and open advisor notes. Then switch to **Client View** to show what the investor sees after RM approval.
