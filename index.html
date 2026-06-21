@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio Decision Copilot | MVP</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">D</div>
+      <div>
+        <h1>Decision Copilot</h1>
+        <p>Explain portfolio actions at scale</p>
+      </div>
+    </div>
+    <nav>
+      <button class="nav active" data-view="dashboard">Client briefing</button>
+      <button class="nav" data-view="advisor">Advisor console</button>
+      <button class="nav" data-view="timeline">Decision timeline</button>
+      <button class="nav" data-view="mvp">MVP notes</button>
+    </nav>
+    <div class="pitch-card">
+      <span class="eyebrow">Problem</span>
+      <p>Active wealth management creates trust only when clients understand why actions are taken.</p>
+    </div>
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <div>
+        <span class="eyebrow">Prototype for Dezerv PM application</span>
+        <h2 id="pageTitle">Client briefing</h2>
+      </div>
+      <button id="exportBtn">Copy founder note</button>
+    </header>
+
+    <section id="dashboard" class="view active-view">
+      <div class="hero">
+        <div>
+          <span class="pill">For: Arjun Mehta · Growth portfolio</span>
+          <h3>Your portfolio was repositioned this week</h3>
+          <p>We reduced concentration risk while keeping long-term growth exposure intact. Here is the decision in simple terms.</p>
+        </div>
+        <div class="score">
+          <span>Trust clarity score</span>
+          <strong>92</strong>
+          <small>Advisor-ready explanation generated</small>
+        </div>
+      </div>
+
+      <div class="grid two">
+        <article class="card accent">
+          <span class="eyebrow">What changed</span>
+          <h3>Trimmed mid-cap exposure by 6%</h3>
+          <p>Moved capital from a high-volatility mid-cap fund into a diversified flexi-cap strategy and short-duration debt.</p>
+        </article>
+        <article class="card">
+          <span class="eyebrow">Why now</span>
+          <h3>Valuation risk has risen</h3>
+          <p>Mid-cap valuations expanded faster than earnings. The portfolio was taking more downside risk than intended for the client profile.</p>
+        </article>
+      </div>
+
+      <div class="grid three">
+        <article class="metric"><span>Expected volatility</span><strong>-11%</strong><small>Estimated reduction</small></article>
+        <article class="metric"><span>Equity allocation</span><strong>68%</strong><small>Still growth-oriented</small></article>
+        <article class="metric"><span>Liquidity buffer</span><strong>9%</strong><small>Up from 5%</small></article>
+      </div>
+
+      <article class="card">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Client-ready explanation</span>
+            <h3>Generated narrative</h3>
+          </div>
+          <button class="secondary" id="regenerateBtn">Regenerate tone</button>
+        </div>
+        <p id="narrative" class="narrative"></p>
+      </article>
+    </section>
+
+    <section id="advisor" class="view">
+      <div class="grid two">
+        <article class="card">
+          <span class="eyebrow">Advisor prompt</span>
+          <h3>Before the client calls</h3>
+          <ul>
+            <li>Client may ask why returns could lag peers in a sharp mid-cap rally.</li>
+            <li>Emphasize risk-adjusted outcomes, not market timing.</li>
+            <li>Offer to review concentration across external holdings.</li>
+          </ul>
+        </article>
+        <article class="card">
+          <span class="eyebrow">Objection handling</span>
+          <h3>“Why not stay aggressive?”</h3>
+          <p>The recommendation is not to exit growth. It is to avoid a single style becoming too dominant. The portfolio remains 68% equity but with better downside protection.</p>
+        </article>
+      </div>
+      <article class="card">
+        <span class="eyebrow">Risk flags</span>
+        <div id="riskList" class="risk-list"></div>
+      </article>
+    </section>
+
+    <section id="timeline" class="view">
+      <article class="card">
+        <span class="eyebrow">Investment committee decision history</span>
+        <h3>Every action becomes explainable</h3>
+        <div id="timelineItems" class="timeline"></div>
+      </article>
+    </section>
+
+    <section id="mvp" class="view">
+      <article class="card">
+        <span class="eyebrow">MVP concept</span>
+        <h3>Portfolio Decision Copilot</h3>
+        <p>This prototype converts investment committee decisions into client-ready narratives, advisor talking points, and decision timelines.</p>
+        <div class="grid two compact">
+          <div>
+            <h4>Input</h4>
+            <p>Portfolio snapshot, client risk profile, transaction/action log, market rationale.</p>
+          </div>
+          <div>
+            <h4>Output</h4>
+            <p>Plain-English “why this action” note, impact summary, objections, and CRM-ready advisor brief.</p>
+          </div>
+        </div>
+        <h4>Why this matters for Dezerv</h4>
+        <p>Dezerv’s promise depends on active portfolio management. The more active the portfolio, the more clients need confidence that decisions are thoughtful, personalized, and outcome-led.</p>
+      </article>
+    </section>
+  </main>
+
+  <div id="toast">Copied founder note</div>
+  <script src="script.js"></script>
+</body>
+</html>
