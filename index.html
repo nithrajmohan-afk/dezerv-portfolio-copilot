@@ -3,187 +3,500 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dezerv Advisor Copilot</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>Dezerv RM Copilot</title>
+  <style>
+    :root {
+      --bg: #f6f3ec;
+      --panel: #ffffff;
+      --ink: #171717;
+      --muted: #66665f;
+      --line: #e5dfd2;
+      --gold: #b58633;
+      --green: #0f7a4f;
+      --red: #b44646;
+      --blue: #244f82;
+      --shadow: 0 18px 45px rgba(30, 24, 12, 0.08);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #fff7df 0, transparent 32%), var(--bg);
+      color: var(--ink);
+    }
+
+    header {
+      padding: 28px 42px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 13px;
+      background: linear-gradient(135deg, #161616, #76561c);
+      color: white;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .brand h1 { margin: 0; font-size: 20px; letter-spacing: -0.02em; }
+    .brand p { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
+
+    .badge {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.68);
+      border-radius: 999px;
+      padding: 10px 14px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    main {
+      padding: 18px 42px 42px;
+      max-width: 1440px;
+      margin: auto;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 22px;
+      align-items: stretch;
+      margin-bottom: 22px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.9);
+      border: 1px solid rgba(229,223,210,0.9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .intro {
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .intro:after {
+      content: "";
+      position: absolute;
+      right: -80px;
+      top: -100px;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: rgba(181, 134, 51, 0.12);
+    }
+
+    .eyebrow { color: var(--gold); text-transform: uppercase; font-size: 12px; letter-spacing: 0.13em; font-weight: 750; }
+    .intro h2 { font-size: 44px; line-height: 1.02; letter-spacing: -0.05em; margin: 12px 0 14px; max-width: 760px; }
+    .intro p { color: var(--muted); font-size: 16px; line-height: 1.7; margin: 0; max-width: 760px; }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+      background: #fffaf0;
+    }
+    .metric b { display: block; font-size: 22px; letter-spacing: -0.04em; }
+    .metric span { color: var(--muted); font-size: 12px; }
+
+    .client-card { padding: 24px; }
+    .client-top { display:flex; justify-content:space-between; gap: 14px; align-items:flex-start; }
+    .client-name { font-size: 24px; font-weight: 780; letter-spacing:-0.03em; margin: 0; }
+    .client-meta { color: var(--muted); font-size: 13px; margin-top: 6px; }
+    .risk { background:#eef8f2; color: var(--green); border-radius:999px; padding:8px 10px; font-size:12px; font-weight:700; white-space:nowrap; }
+
+    .portfolio-bars { margin-top: 22px; display:grid; gap:12px; }
+    .bar-row { display:grid; grid-template-columns: 135px 1fr 46px; align-items:center; gap:12px; font-size:13px; }
+    .track { height: 11px; border-radius:999px; background:#eee8dd; overflow:hidden; }
+    .fill { height:100%; background: linear-gradient(90deg, #1d1d1d, #b58633); border-radius:999px; }
+    .bar-row span:last-child { text-align:right; color:var(--muted); }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .section { padding: 24px; }
+    .section h3 { margin:0 0 6px; font-size:20px; letter-spacing:-0.03em; }
+    .section .sub { margin:0 0 20px; color:var(--muted); font-size:14px; line-height:1.5; }
+
+    .action-card {
+      border: 1px solid var(--line);
+      background: #fffdf8;
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 14px;
+      cursor: pointer;
+      transition: 0.18s ease;
+    }
+    .action-card:hover, .action-card.active { border-color: rgba(181,134,51,0.7); transform: translateY(-1px); box-shadow:0 12px 26px rgba(55,42,15,0.08); }
+    .action-head { display:flex; justify-content:space-between; gap:10px; align-items:center; }
+    .action-title { font-weight: 760; letter-spacing:-0.02em; }
+    .tag { font-size:11px; font-weight:760; padding:6px 9px; border-radius:999px; background:#f1eadc; color:#7a5a20; white-space:nowrap; }
+    .action-card p { color:var(--muted); line-height:1.5; font-size:13px; margin:10px 0 0; }
+
+    .delta {
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+    .delta div { background:white; border:1px solid var(--line); border-radius:14px; padding:12px; }
+    .delta small { color:var(--muted); display:block; margin-bottom:4px; }
+    .delta b { font-size:15px; }
+
+    .generator {
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 20px;
+    }
+    button {
+      border: 0;
+      border-radius: 14px;
+      padding: 13px 16px;
+      font-weight: 760;
+      cursor:pointer;
+      transition: 0.16s ease;
+    }
+    .primary { background: #171717; color:#fff; }
+    .secondary { background:#f2eadb; color:#5e4316; }
+    button:hover { transform: translateY(-1px); }
+
+    .output-tabs {
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin: 18px 0;
+    }
+    .tab {
+      border:1px solid var(--line);
+      background:white;
+      color:var(--muted);
+      padding:9px 12px;
+      border-radius:999px;
+      font-size:13px;
+      cursor:pointer;
+    }
+    .tab.active { background:#171717; color:white; border-color:#171717; }
+
+    .output-box {
+      min-height: 340px;
+      border:1px solid var(--line);
+      border-radius: 18px;
+      padding: 20px;
+      background:#fffdf8;
+      line-height:1.65;
+      white-space: pre-wrap;
+      font-size:14px;
+    }
+    .output-label { color:var(--gold); font-weight:800; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; margin-bottom: 10px; }
+
+    .qa-grid {
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:22px;
+      margin-top:22px;
+    }
+    .questions { display:grid; gap:10px; }
+    .question {
+      border:1px solid var(--line);
+      background:white;
+      border-radius:16px;
+      padding:14px;
+      cursor:pointer;
+      font-weight:700;
+      font-size:14px;
+    }
+    .question.active { border-color:var(--gold); background:#fffaf0; }
+    .answer { border:1px solid var(--line); background:#fffdf8; border-radius:18px; padding:20px; line-height:1.65; color:#2b2b2b; min-height:214px; }
+
+    .timeline { margin-top:22px; display:grid; gap:12px; }
+    .event { display:grid; grid-template-columns: 105px 1fr; gap:16px; border-top:1px solid var(--line); padding-top:14px; }
+    .event time { color:var(--muted); font-size:13px; }
+    .event b { display:block; margin-bottom:4px; }
+    .event p { margin:0; color:var(--muted); font-size:13px; line-height:1.5; }
+
+    .split-note {
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+      margin-top: 18px;
+    }
+    .note-box { background:#fffaf0; border:1px solid var(--line); border-radius:16px; padding:15px; font-size:13px; line-height:1.5; }
+    .note-box b { display:block; margin-bottom:5px; }
+
+    footer { padding: 14px 42px 34px; color:var(--muted); font-size:12px; text-align:center; }
+
+    @media (max-width: 980px) {
+      header, main { padding-left: 18px; padding-right: 18px; }
+      .hero, .workspace, .qa-grid, .split-note { grid-template-columns: 1fr; }
+      .metrics { grid-template-columns: 1fr 1fr; }
+      .intro h2 { font-size:34px; }
+    }
+  </style>
 </head>
 <body>
-  <div class="app-shell">
-    <aside class="sidebar">
-      <div class="brand">
-        <div class="logo-mark">D</div>
-        <div>
-          <p class="eyebrow">Dezerv concept</p>
-          <h1>Advisor Copilot</h1>
+  <header>
+    <div class="brand">
+      <div class="logo">D</div>
+      <div>
+        <h1>Dezerv RM Copilot</h1>
+        <p>Advisor-facing tool to explain portfolio decisions faster</p>
+      </div>
+    </div>
+    <div class="badge">Prototype with mock portfolio data</div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="card intro">
+        <div class="eyebrow">Relationship Manager Workspace</div>
+        <h2>Turn investment actions into client-ready explanations in seconds.</h2>
+        <p>
+          Active portfolio management builds trust only when clients understand the rationale behind every change.
+          This copilot helps an RM convert investment committee notes into WhatsApp messages, email drafts, advisor talking points, and client Q&A responses.
+        </p>
+        <div class="metrics">
+          <div class="metric"><b>₹8.4 Cr</b><span>Client AUM</span></div>
+          <div class="metric"><b>3</b><span>Recent actions</span></div>
+          <div class="metric"><b>12%</b><span>Risk reduction target</span></div>
+          <div class="metric"><b>60 sec</b><span>RM prep time</span></div>
         </div>
       </div>
 
-      <nav>
-        <button class="nav-item active" data-view="advisor">Advisor workspace</button>
-        <button class="nav-item" data-view="client">Client preview</button>
-        <button class="nav-item" data-view="timeline">Decision timeline</button>
-      </nav>
+      <aside class="card client-card">
+        <div class="client-top">
+          <div>
+            <h2 class="client-name">Rajesh Gupta</h2>
+            <div class="client-meta">HNI investor · Growth with capital preservation · Moderate-aggressive</div>
+          </div>
+          <div class="risk">On-track</div>
+        </div>
+        <div class="portfolio-bars">
+          <div class="bar-row"><span>Equity PMS</span><div class="track"><div class="fill" style="width:42%"></div></div><span>42%</span></div>
+          <div class="bar-row"><span>Mutual Funds</span><div class="track"><div class="fill" style="width:28%"></div></div><span>28%</span></div>
+          <div class="bar-row"><span>Debt</span><div class="track"><div class="fill" style="width:18%"></div></div><span>18%</span></div>
+          <div class="bar-row"><span>Cash/T-bills</span><div class="track"><div class="fill" style="width:12%"></div></div><span>12%</span></div>
+        </div>
+        <div class="split-note">
+          <div class="note-box"><b>Advisor sees</b>Portfolio action, rationale, risk context, talking points, and editable communication drafts.</div>
+          <div class="note-box"><b>Client receives</b>Only the final approved WhatsApp/email explanation from the RM, not internal notes.</div>
+        </div>
+      </aside>
+    </section>
 
-      <div class="sidebar-card">
-        <p class="eyebrow">Purpose</p>
-        <p>Help advisors explain portfolio decisions to HNI clients faster, with clearer rationale and consistent communication.</p>
+    <section class="workspace">
+      <div class="card section">
+        <h3>Recent investment actions</h3>
+        <p class="sub">Select an action. The copilot prepares communication for the RM to review before sending.</p>
+
+        <div class="action-card active" data-action="financials">
+          <div class="action-head">
+            <div class="action-title">Reduced Financial Services exposure</div>
+            <div class="tag">Needs client update</div>
+          </div>
+          <p>Allocation reduced from 18% to 12% after valuation expansion and weaker earnings revisions.</p>
+          <div class="delta">
+            <div><small>Before</small><b>18%</b></div>
+            <div><small>After</small><b>12%</b></div>
+            <div><small>Impact</small><b>-12% volatility</b></div>
+          </div>
+        </div>
+
+        <div class="action-card" data-action="cash">
+          <div class="action-head">
+            <div class="action-title">Increased cash/T-bill allocation</div>
+            <div class="tag">Opportunity reserve</div>
+          </div>
+          <p>Cash allocation increased from 7% to 12% to preserve liquidity for market dislocations.</p>
+          <div class="delta">
+            <div><small>Before</small><b>7%</b></div>
+            <div><small>After</small><b>12%</b></div>
+            <div><small>Impact</small><b>Higher liquidity</b></div>
+          </div>
+        </div>
+
+        <div class="action-card" data-action="midcap">
+          <div class="action-head">
+            <div class="action-title">Trimmed mid-cap momentum basket</div>
+            <div class="tag">Risk control</div>
+          </div>
+          <p>Partial profit booking after sharp run-up to avoid concentration in crowded momentum names.</p>
+          <div class="delta">
+            <div><small>Before</small><b>16%</b></div>
+            <div><small>After</small><b>11%</b></div>
+            <div><small>Impact</small><b>Lower drawdown</b></div>
+          </div>
+        </div>
+
+        <div class="timeline">
+          <div class="event"><time>Today</time><div><b>RM brief generated</b><p>Client-ready explanation, FAQs, and talking points prepared for review.</p></div></div>
+          <div class="event"><time>Yesterday</time><div><b>Investment team note added</b><p>Valuation risk and weaker earnings revisions flagged for Financial Services exposure.</p></div></div>
+          <div class="event"><time>Last week</time><div><b>Portfolio rebalance executed</b><p>Reduced sector concentration and increased tactical liquidity.</p></div></div>
+        </div>
       </div>
-    </aside>
 
-    <main>
-      <header class="topbar">
-        <div>
-          <p class="eyebrow">Relationship manager workspace</p>
-          <h2>Explain portfolio decisions in seconds</h2>
-        </div>
-        <button id="copyFounderMessage" class="secondary-btn">Copy outreach note</button>
-      </header>
+      <div class="card section">
+        <h3>Communication copilot</h3>
+        <p class="sub">Outputs are meant to aid the advisor. The RM reviews, edits, and sends the final message to the client.</p>
 
-      <section class="view active" id="advisor">
-        <div class="grid two-col">
-          <section class="panel">
-            <div class="panel-header">
-              <div>
-                <p class="eyebrow">Client selected</p>
-                <h3>Rajesh Mehta</h3>
-              </div>
-              <span class="pill">HNI · Balanced Growth</span>
-            </div>
-
-            <div class="client-metrics">
-              <div><span>Portfolio</span><strong>₹8.4 Cr</strong></div>
-              <div><span>Risk profile</span><strong>Moderate</strong></div>
-              <div><span>Review due</span><strong>Today</strong></div>
-            </div>
-
-            <div class="decision-card selected">
-              <p class="eyebrow">Investment action</p>
-              <h4>Reduce mid-cap exposure by 6% and move proceeds to short-duration debt</h4>
-              <p>Triggered after valuation expansion, rising near-term volatility, and client’s upcoming liquidity need.</p>
-            </div>
-
-            <div class="decision-card">
-              <p class="eyebrow">Secondary action</p>
-              <h4>Trim overlap across two flexi-cap funds</h4>
-              <p>Reduces duplicated exposure to financials and improves portfolio diversification.</p>
-            </div>
-          </section>
-
-          <section class="panel copilot-panel">
-            <div class="panel-header">
-              <div>
-                <p class="eyebrow">Copilot output</p>
-                <h3>Advisor-ready explanation</h3>
-              </div>
-              <button id="regenerate" class="primary-btn">Generate explanation</button>
-            </div>
-
-            <div class="tabs">
-              <button class="tab active" data-output="whatsapp">WhatsApp</button>
-              <button class="tab" data-output="email">Email</button>
-              <button class="tab" data-output="advisorNotes">Advisor notes</button>
-            </div>
-
-            <div class="output-card active" id="whatsapp">
-              <p>Hi Rajesh, we have made a small portfolio adjustment today.</p>
-              <p>We reduced mid-cap exposure by 6% and moved that amount into short-duration debt. The reason is not a change in your long-term growth objective, but a near-term risk-management call. Mid-cap valuations have expanded sharply, market volatility has increased, and you also have a liquidity requirement coming up in the next 6–9 months.</p>
-              <p>This change helps protect part of the portfolio from downside risk while keeping liquidity available for future opportunities. Your overall portfolio remains aligned to the Balanced Growth plan.</p>
-            </div>
-
-            <div class="output-card" id="email">
-              <p><strong>Subject:</strong> Portfolio update: risk-management adjustment</p>
-              <p>Dear Rajesh,</p>
-              <p>As part of our ongoing portfolio monitoring, we have reduced your mid-cap exposure by 6% and moved the proceeds into short-duration debt.</p>
-              <p>The objective is to manage near-term volatility while preserving your long-term growth allocation. Mid-cap valuations have moved above our preferred comfort range, and given your upcoming liquidity need, we believe this is a prudent adjustment.</p>
-              <p>This does not change your broader investment strategy. It is a tactical action to balance growth, risk, and liquidity.</p>
-              <p>Regards,<br/>Your Dezerv advisor</p>
-            </div>
-
-            <div class="output-card" id="advisorNotes">
-              <ul>
-                <li><strong>Client context:</strong> Liquidity need expected in 6–9 months.</li>
-                <li><strong>Decision rationale:</strong> Mid-cap valuations above comfort range; volatility elevated.</li>
-                <li><strong>Expected impact:</strong> Lower short-term drawdown sensitivity and improve liquidity buffer.</li>
-                <li><strong>Objection handling:</strong> Clarify this is tactical risk management, not market exit.</li>
-                <li><strong>Next step:</strong> Schedule 15-min check-in if client asks about opportunity cost.</li>
-              </ul>
-            </div>
-          </section>
+        <div class="generator">
+          <button class="primary" id="generateBtn">Generate client communication</button>
+          <button class="secondary" id="copyBtn">Copy current draft</button>
         </div>
 
-        <section class="panel full-width">
-          <div class="panel-header">
-            <div>
-              <p class="eyebrow">How this works in production</p>
-              <h3>Designed as an internal advisor tool first</h3>
-            </div>
-          </div>
-          <div class="workflow">
-            <div><span>1</span><strong>Investment team logs decision</strong><p>Action, rationale, risk view, expected impact.</p></div>
-            <div><span>2</span><strong>Copilot personalizes communication</strong><p>Uses client profile, goal, risk appetite, and portfolio context.</p></div>
-            <div><span>3</span><strong>Advisor reviews and sends</strong><p>Human-in-the-loop approval before WhatsApp/email.</p></div>
-            <div><span>4</span><strong>Client sees simple explanation</strong><p>No jargon, no internal notes, no research dump.</p></div>
-          </div>
-        </section>
-      </section>
+        <div class="output-tabs">
+          <div class="tab active" data-tab="whatsapp">WhatsApp</div>
+          <div class="tab" data-tab="email">Email</div>
+          <div class="tab" data-tab="advisor">Advisor notes</div>
+          <div class="tab" data-tab="client">Client preview</div>
+        </div>
 
-      <section class="view" id="client">
-        <section class="phone-wrap">
-          <div class="phone">
-            <div class="phone-header">Dezerv portfolio update</div>
-            <div class="client-update">
-              <p class="eyebrow">What changed</p>
-              <h3>We reduced your mid-cap allocation by 6%</h3>
-              <p>Part of this amount has been moved to short-duration debt to reduce near-term volatility and preserve liquidity.</p>
-            </div>
-            <div class="client-update">
-              <p class="eyebrow">Why this matters</p>
-              <p>Mid-cap valuations have become expensive relative to risk. Since you have a planned liquidity need, this adjustment creates a safer buffer without changing your long-term growth plan.</p>
-            </div>
-            <div class="client-update">
-              <p class="eyebrow">Impact on your plan</p>
-              <div class="impact-row"><span>Risk</span><strong>Lower</strong></div>
-              <div class="impact-row"><span>Liquidity</span><strong>Higher</strong></div>
-              <div class="impact-row"><span>Long-term strategy</span><strong>Unchanged</strong></div>
-            </div>
-            <button class="primary-btn wide">Ask my advisor a question</button>
-          </div>
+        <div class="output-box" id="outputBox"></div>
+      </div>
+    </section>
 
-          <div class="panel explanation-panel">
-            <p class="eyebrow">Client-facing experience</p>
-            <h3>What the client sees</h3>
-            <p>The client does not see internal research, prompts, or advisor notes. They only see a clear explanation of what changed, why it changed, and what it means for their plan.</p>
-            <p>This can live inside the Dezerv client app, as a WhatsApp message, or as an email summary sent by the advisor.</p>
-          </div>
-        </section>
-      </section>
+    <section class="card section qa-grid">
+      <div>
+        <h3>Client question simulator</h3>
+        <p class="sub">Likely follow-up questions the RM may receive after the portfolio change.</p>
+        <div class="questions">
+          <div class="question active" data-q="why">Why did we reduce this exposure now?</div>
+          <div class="question" data-q="upside">Will I miss out if the sector keeps rising?</div>
+          <div class="question" data-q="friend">Why is my portfolio different from my friend’s?</div>
+          <div class="question" data-q="cash">Why are we holding more cash?</div>
+        </div>
+      </div>
+      <div>
+        <h3>Suggested RM response</h3>
+        <p class="sub">Answer style: clear, non-technical, confidence-building.</p>
+        <div class="answer" id="answerBox"></div>
+      </div>
+    </section>
+  </main>
 
-      <section class="view" id="timeline">
-        <section class="panel">
-          <p class="eyebrow">Decision audit trail</p>
-          <h3>Portfolio decision timeline</h3>
-          <div class="timeline">
-            <div class="timeline-item">
-              <span>Today</span>
-              <h4>Reduced mid-cap exposure by 6%</h4>
-              <p>Reason: valuation expansion, volatility risk, upcoming liquidity need.</p>
-            </div>
-            <div class="timeline-item">
-              <span>Last month</span>
-              <h4>Added short-duration debt allocation</h4>
-              <p>Reason: improved yield opportunity and liquidity planning.</p>
-            </div>
-            <div class="timeline-item">
-              <span>Previous quarter</span>
-              <h4>Trimmed duplicated financial services exposure</h4>
-              <p>Reason: fund overlap and concentration risk.</p>
-            </div>
-          </div>
-        </section>
-      </section>
-    </main>
-  </div>
+  <footer>
+    Concept prototype · Uses mock data only · Designed to demonstrate an advisor-assisted workflow for active portfolio management communication
+  </footer>
 
-  <div id="toast">Copied</div>
-  <script src="script.js"></script>
+<script>
+  const data = {
+    financials: {
+      label: 'Reduced Financial Services exposure',
+      whatsapp: `Hi Rajesh, quick portfolio update from our side.\n\nWe have reduced your Financial Services exposure from 18% to 12%. The sector has performed well, but valuations now leave less room for error while earnings revisions have started softening.\n\nThis is not a negative view on the long-term opportunity. It is a risk-management action to protect gains, reduce concentration, and keep your portfolio better positioned for future opportunities.`,
+      email: `Subject: Portfolio update: Financial Services exposure reduced\n\nHi Rajesh,\n\nWe wanted to share a brief update on your portfolio. As part of the latest rebalance, we reduced your Financial Services exposure from 18% to 12%.\n\nWhy we made this change:\n• Valuations in parts of the sector have expanded meaningfully after the recent rally.\n• Earnings revisions have started moderating, which reduces the near-term risk-reward.\n• Your portfolio had become relatively concentrated in this sector versus your target risk profile.\n\nWhat this means for you:\nThis move helps protect the gains already made, lowers portfolio volatility, and creates more flexibility to deploy capital if better opportunities emerge. We continue to remain invested in high-quality long-term opportunities, but with a more balanced allocation.\n\nHappy to walk you through this in more detail.\n\nRegards,\nYour Dezerv Relationship Manager`,
+      advisor: `Internal advisor notes\n\nClient context:\nRajesh is comfortable with growth, but usually reacts strongly to unexplained drawdowns. Keep the explanation focused on discipline, not fear.\n\nInvestment rationale:\n• Reduced Financial Services allocation from 18% to 12%.\n• Trigger: valuation expansion + weaker earnings revision trend.\n• Goal: reduce concentration risk and protect gains.\n• Important framing: not exiting the sector; resizing exposure.\n\nRecommended talk track:\n“We are not trying to time the market perfectly. We are making sure the portfolio does not become over-dependent on one sector after a sharp rally.”\n\nLikely objection:\n“What if it keeps going up?”\n\nResponse:\n“We still retain exposure, but at a more appropriate weight. The objective is not to capture every last percentage point of upside; it is to compound wealth with controlled risk.”`,
+      client: `What Rajesh sees\n\nPortfolio update\nFinancial Services exposure reduced from 18% to 12%.\n\nWhy this was done\nThe sector has performed well, but valuations have become less attractive. We reduced exposure to protect gains and lower concentration risk.\n\nHow it helps\nYour portfolio remains invested for long-term growth, while becoming less exposed to a single sector. This improves resilience if markets turn volatile.`
+    },
+    cash: {
+      label: 'Increased cash/T-bill allocation',
+      whatsapp: `Hi Rajesh, we have increased the cash/T-bill allocation in your portfolio from 7% to 12%.\n\nThis gives us more flexibility to act quickly if markets correct or if attractive opportunities emerge. The intent is not to stay idle, but to keep dry powder ready while avoiding forced decisions in an overheated market.`,
+      email: `Subject: Portfolio update: tactical liquidity increased\n\nHi Rajesh,\n\nAs part of the latest portfolio review, we increased your cash/T-bill allocation from 7% to 12%.\n\nWhy we made this change:\n• Several risk assets have rallied sharply.\n• Near-term market volatility may create better entry opportunities.\n• A higher liquidity buffer gives us flexibility without materially changing your long-term plan.\n\nThis is a tactical allocation, not a shift away from your growth objective. We will look to redeploy this capital when the risk-reward becomes more attractive.\n\nRegards,\nYour Dezerv Relationship Manager`,
+      advisor: `Internal advisor notes\n\nFrame this as “optionality”, not caution.\n\nKey points:\n• Cash/T-bills moved from 7% to 12%.\n• Purpose: dry powder for volatility-driven opportunities.\n• Avoid saying “we are bearish.”\n• Say “we are being selective after a strong rally.”\n\nClient concern to anticipate:\n“Is cash dragging returns?”\n\nResponse:\n“A measured cash position can improve long-term outcomes if it allows us to deploy during dislocations instead of chasing rallies.”`,
+      client: `What Rajesh sees\n\nPortfolio update\nCash/T-bill allocation increased from 7% to 12%.\n\nWhy this was done\nWe want to keep capital ready for better entry points if markets become volatile.\n\nHow it helps\nThis improves flexibility without changing your long-term investment objective.`
+    },
+    midcap: {
+      label: 'Trimmed mid-cap momentum basket',
+      whatsapp: `Hi Rajesh, we have trimmed part of the mid-cap momentum basket after a strong run-up.\n\nThis is a profit-protection step. We continue to participate in long-term growth, but have reduced exposure to crowded names where the near-term upside no longer justifies the risk.`,
+      email: `Subject: Portfolio update: mid-cap exposure trimmed\n\nHi Rajesh,\n\nWe have trimmed the mid-cap momentum basket in your portfolio from 16% to 11%.\n\nWhy we made this change:\n• The basket has delivered strong gains.\n• Some positions have become crowded after the recent rally.\n• Risk-reward is less attractive at current prices.\n\nThis is not a complete exit. It is a disciplined rebalance to lock in part of the gains and keep your portfolio aligned to your target risk profile.\n\nRegards,\nYour Dezerv Relationship Manager`,
+      advisor: `Internal advisor notes\n\nPosition this as disciplined profit booking.\n\nKey points:\n• Reduced mid-cap momentum basket from 16% to 11%.\n• Protects gains after a strong run.\n• Reduces exposure to crowded trades.\n• Retains participation through core equity allocation.\n\nPhrase to use:\n“We are taking some money off the table where the risk-reward has become less attractive, while continuing to stay invested in the broader growth story.”`,
+      client: `What Rajesh sees\n\nPortfolio update\nMid-cap momentum exposure reduced from 16% to 11%.\n\nWhy this was done\nThe allocation has performed well, and we are protecting part of the gains after a sharp rally.\n\nHow it helps\nYour portfolio remains exposed to growth, but with less downside risk from crowded positions.`
+    }
+  };
+
+  const answers = {
+    why: `We reduced the exposure now because the sector has already had a strong run. When valuations rise faster than earnings expectations, the margin of safety reduces. The portfolio still has exposure to the sector, but at a weight that is more appropriate for Rajesh’s risk profile.`,
+    upside: `There is always a chance the sector continues to rise in the short term. The decision is not about exiting completely; it is about avoiding over-concentration. Rajesh still participates in upside, but the portfolio is less vulnerable if the sector corrects.`,
+    friend: `Each Dezerv portfolio should reflect the client’s risk profile, liquidity needs, investment horizon, and existing exposures. Two clients may own similar assets but at different weights because their total financial picture is different.`,
+    cash: `The additional cash/T-bill allocation is meant to create flexibility. It allows the investment team to deploy quickly if markets correct or if a more attractive opportunity appears, instead of being forced to sell existing positions at the wrong time.`
+  };
+
+  let currentAction = 'financials';
+  let currentTab = 'whatsapp';
+  const outputBox = document.getElementById('outputBox');
+  const answerBox = document.getElementById('answerBox');
+
+  function renderOutput() {
+    const labelMap = { whatsapp: 'WhatsApp draft', email: 'Email draft', advisor: 'Advisor notes', client: 'Client preview' };
+    outputBox.innerHTML = `<div class="output-label">${labelMap[currentTab]}</div>${data[currentAction][currentTab]}`;
+  }
+
+  function renderAnswer(q = 'why') {
+    answerBox.textContent = answers[q];
+  }
+
+  document.querySelectorAll('.action-card').forEach(card => {
+    card.addEventListener('click', () => {
+      document.querySelectorAll('.action-card').forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+      currentAction = card.dataset.action;
+      renderOutput();
+    });
+  });
+
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      currentTab = tab.dataset.tab;
+      renderOutput();
+    });
+  });
+
+  document.querySelectorAll('.question').forEach(q => {
+    q.addEventListener('click', () => {
+      document.querySelectorAll('.question').forEach(x => x.classList.remove('active'));
+      q.classList.add('active');
+      renderAnswer(q.dataset.q);
+    });
+  });
+
+  document.getElementById('generateBtn').addEventListener('click', () => {
+    outputBox.style.opacity = 0.25;
+    setTimeout(() => { outputBox.style.opacity = 1; renderOutput(); }, 260);
+  });
+
+  document.getElementById('copyBtn').addEventListener('click', async () => {
+    const text = data[currentAction][currentTab];
+    try {
+      await navigator.clipboard.writeText(text);
+      const original = document.getElementById('copyBtn').textContent;
+      document.getElementById('copyBtn').textContent = 'Copied';
+      setTimeout(() => document.getElementById('copyBtn').textContent = original, 1200);
+    } catch (e) {
+      alert('Copy failed. Please select the text manually.');
+    }
+  });
+
+  renderOutput();
+  renderAnswer();
+</script>
 </body>
 </html>

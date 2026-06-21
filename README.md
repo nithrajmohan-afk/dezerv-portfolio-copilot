@@ -1,58 +1,18 @@
-# Dezerv Advisor Copilot
+# Dezerv RM Copilot
 
-A lightweight advisor-facing prototype for Dezerv.
+Advisor-facing prototype for active portfolio management communication.
 
-## Product idea
+## What it demonstrates
 
-Active portfolio management creates a communication challenge: every portfolio action needs to be explained to HNI clients in a way that is clear, personalized, and trust-building.
+- A relationship manager sees a mock HNI client portfolio.
+- The RM selects a recent investment action.
+- The copilot generates WhatsApp, email, advisor notes, and client preview outputs.
+- A client question simulator helps the RM prepare for likely follow-ups.
 
-This prototype shows an **internal Advisor Copilot** that helps a relationship manager convert investment decisions into:
+## Intended product direction
 
-- WhatsApp-ready client explanation
-- Email-ready client explanation
-- Advisor talking points
-- Client-facing portfolio update preview
-- Decision timeline / audit trail
+This is not a self-serve robo-advisor. It is an advisor-assisted copilot designed to help Dezerv RMs explain portfolio decisions faster and more consistently, while keeping the final communication reviewed and approved by the advisor.
 
-## Intended user split
+## Deployment
 
-### Advisor sees
-
-- Client context
-- Portfolio action
-- Advisor notes
-- Objection handling
-- WhatsApp and email drafts
-- Decision timeline
-
-### Client sees
-
-- What changed
-- Why it changed
-- Impact on their plan
-- Option to ask advisor a question
-
-The product is intentionally **advisor-assisted**, not fully self-serve. The advisor reviews before sending.
-
-## Deploy on GitHub Pages
-
-1. Upload these files to your existing `dezerv-portfolio-copilot` GitHub repository.
-2. Commit the changes to `main`.
-3. Go to **Settings → Pages**.
-4. Source: **Deploy from a branch**.
-5. Branch: **main**, folder: **/ root**.
-6. Save and refresh after a minute.
-
-## Founder message
-
-Hi Vaibhav,
-
-I applied for the Product Manager role at Dezerv, but wanted to go beyond just sharing my profile.
-
-I noticed that active portfolio management creates an explainability challenge for relationship managers: how do advisors explain portfolio actions to HNI clients quickly, clearly, and consistently without increasing manual workload?
-
-I built a quick working prototype around that idea: an Advisor Copilot that converts portfolio decisions into client-ready WhatsApp/email explanations, advisor notes, and a decision timeline.
-
-Sharing it here: <your link>
-
-Would love your feedback.
+Upload `index.html` and `README.md` to the existing GitHub repository root. GitHub Pages will redeploy automatically.
