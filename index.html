@@ -3,137 +3,187 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portfolio Decision Copilot | MVP</title>
+  <title>Dezerv Advisor Copilot</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <aside class="sidebar">
-    <div class="brand">
-      <div class="logo">D</div>
-      <div>
-        <h1>Decision Copilot</h1>
-        <p>Explain portfolio actions at scale</p>
-      </div>
-    </div>
-    <nav>
-      <button class="nav active" data-view="dashboard">Client briefing</button>
-      <button class="nav" data-view="advisor">Advisor console</button>
-      <button class="nav" data-view="timeline">Decision timeline</button>
-      <button class="nav" data-view="mvp">MVP notes</button>
-    </nav>
-    <div class="pitch-card">
-      <span class="eyebrow">Problem</span>
-      <p>Active wealth management creates trust only when clients understand why actions are taken.</p>
-    </div>
-  </aside>
-
-  <main>
-    <header class="topbar">
-      <div>
-        <span class="eyebrow">Prototype for Dezerv PM application</span>
-        <h2 id="pageTitle">Client briefing</h2>
-      </div>
-      <button id="exportBtn">Copy founder note</button>
-    </header>
-
-    <section id="dashboard" class="view active-view">
-      <div class="hero">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo-mark">D</div>
         <div>
-          <span class="pill">For: Arjun Mehta · Growth portfolio</span>
-          <h3>Your portfolio was repositioned this week</h3>
-          <p>We reduced concentration risk while keeping long-term growth exposure intact. Here is the decision in simple terms.</p>
-        </div>
-        <div class="score">
-          <span>Trust clarity score</span>
-          <strong>92</strong>
-          <small>Advisor-ready explanation generated</small>
+          <p class="eyebrow">Dezerv concept</p>
+          <h1>Advisor Copilot</h1>
         </div>
       </div>
 
-      <div class="grid two">
-        <article class="card accent">
-          <span class="eyebrow">What changed</span>
-          <h3>Trimmed mid-cap exposure by 6%</h3>
-          <p>Moved capital from a high-volatility mid-cap fund into a diversified flexi-cap strategy and short-duration debt.</p>
-        </article>
-        <article class="card">
-          <span class="eyebrow">Why now</span>
-          <h3>Valuation risk has risen</h3>
-          <p>Mid-cap valuations expanded faster than earnings. The portfolio was taking more downside risk than intended for the client profile.</p>
-        </article>
-      </div>
+      <nav>
+        <button class="nav-item active" data-view="advisor">Advisor workspace</button>
+        <button class="nav-item" data-view="client">Client preview</button>
+        <button class="nav-item" data-view="timeline">Decision timeline</button>
+      </nav>
 
-      <div class="grid three">
-        <article class="metric"><span>Expected volatility</span><strong>-11%</strong><small>Estimated reduction</small></article>
-        <article class="metric"><span>Equity allocation</span><strong>68%</strong><small>Still growth-oriented</small></article>
-        <article class="metric"><span>Liquidity buffer</span><strong>9%</strong><small>Up from 5%</small></article>
+      <div class="sidebar-card">
+        <p class="eyebrow">Purpose</p>
+        <p>Help advisors explain portfolio decisions to HNI clients faster, with clearer rationale and consistent communication.</p>
       </div>
+    </aside>
 
-      <article class="card">
-        <div class="section-head">
-          <div>
-            <span class="eyebrow">Client-ready explanation</span>
-            <h3>Generated narrative</h3>
+    <main>
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Relationship manager workspace</p>
+          <h2>Explain portfolio decisions in seconds</h2>
+        </div>
+        <button id="copyFounderMessage" class="secondary-btn">Copy outreach note</button>
+      </header>
+
+      <section class="view active" id="advisor">
+        <div class="grid two-col">
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Client selected</p>
+                <h3>Rajesh Mehta</h3>
+              </div>
+              <span class="pill">HNI · Balanced Growth</span>
+            </div>
+
+            <div class="client-metrics">
+              <div><span>Portfolio</span><strong>₹8.4 Cr</strong></div>
+              <div><span>Risk profile</span><strong>Moderate</strong></div>
+              <div><span>Review due</span><strong>Today</strong></div>
+            </div>
+
+            <div class="decision-card selected">
+              <p class="eyebrow">Investment action</p>
+              <h4>Reduce mid-cap exposure by 6% and move proceeds to short-duration debt</h4>
+              <p>Triggered after valuation expansion, rising near-term volatility, and client’s upcoming liquidity need.</p>
+            </div>
+
+            <div class="decision-card">
+              <p class="eyebrow">Secondary action</p>
+              <h4>Trim overlap across two flexi-cap funds</h4>
+              <p>Reduces duplicated exposure to financials and improves portfolio diversification.</p>
+            </div>
+          </section>
+
+          <section class="panel copilot-panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Copilot output</p>
+                <h3>Advisor-ready explanation</h3>
+              </div>
+              <button id="regenerate" class="primary-btn">Generate explanation</button>
+            </div>
+
+            <div class="tabs">
+              <button class="tab active" data-output="whatsapp">WhatsApp</button>
+              <button class="tab" data-output="email">Email</button>
+              <button class="tab" data-output="advisorNotes">Advisor notes</button>
+            </div>
+
+            <div class="output-card active" id="whatsapp">
+              <p>Hi Rajesh, we have made a small portfolio adjustment today.</p>
+              <p>We reduced mid-cap exposure by 6% and moved that amount into short-duration debt. The reason is not a change in your long-term growth objective, but a near-term risk-management call. Mid-cap valuations have expanded sharply, market volatility has increased, and you also have a liquidity requirement coming up in the next 6–9 months.</p>
+              <p>This change helps protect part of the portfolio from downside risk while keeping liquidity available for future opportunities. Your overall portfolio remains aligned to the Balanced Growth plan.</p>
+            </div>
+
+            <div class="output-card" id="email">
+              <p><strong>Subject:</strong> Portfolio update: risk-management adjustment</p>
+              <p>Dear Rajesh,</p>
+              <p>As part of our ongoing portfolio monitoring, we have reduced your mid-cap exposure by 6% and moved the proceeds into short-duration debt.</p>
+              <p>The objective is to manage near-term volatility while preserving your long-term growth allocation. Mid-cap valuations have moved above our preferred comfort range, and given your upcoming liquidity need, we believe this is a prudent adjustment.</p>
+              <p>This does not change your broader investment strategy. It is a tactical action to balance growth, risk, and liquidity.</p>
+              <p>Regards,<br/>Your Dezerv advisor</p>
+            </div>
+
+            <div class="output-card" id="advisorNotes">
+              <ul>
+                <li><strong>Client context:</strong> Liquidity need expected in 6–9 months.</li>
+                <li><strong>Decision rationale:</strong> Mid-cap valuations above comfort range; volatility elevated.</li>
+                <li><strong>Expected impact:</strong> Lower short-term drawdown sensitivity and improve liquidity buffer.</li>
+                <li><strong>Objection handling:</strong> Clarify this is tactical risk management, not market exit.</li>
+                <li><strong>Next step:</strong> Schedule 15-min check-in if client asks about opportunity cost.</li>
+              </ul>
+            </div>
+          </section>
+        </div>
+
+        <section class="panel full-width">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">How this works in production</p>
+              <h3>Designed as an internal advisor tool first</h3>
+            </div>
           </div>
-          <button class="secondary" id="regenerateBtn">Regenerate tone</button>
-        </div>
-        <p id="narrative" class="narrative"></p>
-      </article>
-    </section>
-
-    <section id="advisor" class="view">
-      <div class="grid two">
-        <article class="card">
-          <span class="eyebrow">Advisor prompt</span>
-          <h3>Before the client calls</h3>
-          <ul>
-            <li>Client may ask why returns could lag peers in a sharp mid-cap rally.</li>
-            <li>Emphasize risk-adjusted outcomes, not market timing.</li>
-            <li>Offer to review concentration across external holdings.</li>
-          </ul>
-        </article>
-        <article class="card">
-          <span class="eyebrow">Objection handling</span>
-          <h3>“Why not stay aggressive?”</h3>
-          <p>The recommendation is not to exit growth. It is to avoid a single style becoming too dominant. The portfolio remains 68% equity but with better downside protection.</p>
-        </article>
-      </div>
-      <article class="card">
-        <span class="eyebrow">Risk flags</span>
-        <div id="riskList" class="risk-list"></div>
-      </article>
-    </section>
-
-    <section id="timeline" class="view">
-      <article class="card">
-        <span class="eyebrow">Investment committee decision history</span>
-        <h3>Every action becomes explainable</h3>
-        <div id="timelineItems" class="timeline"></div>
-      </article>
-    </section>
-
-    <section id="mvp" class="view">
-      <article class="card">
-        <span class="eyebrow">MVP concept</span>
-        <h3>Portfolio Decision Copilot</h3>
-        <p>This prototype converts investment committee decisions into client-ready narratives, advisor talking points, and decision timelines.</p>
-        <div class="grid two compact">
-          <div>
-            <h4>Input</h4>
-            <p>Portfolio snapshot, client risk profile, transaction/action log, market rationale.</p>
+          <div class="workflow">
+            <div><span>1</span><strong>Investment team logs decision</strong><p>Action, rationale, risk view, expected impact.</p></div>
+            <div><span>2</span><strong>Copilot personalizes communication</strong><p>Uses client profile, goal, risk appetite, and portfolio context.</p></div>
+            <div><span>3</span><strong>Advisor reviews and sends</strong><p>Human-in-the-loop approval before WhatsApp/email.</p></div>
+            <div><span>4</span><strong>Client sees simple explanation</strong><p>No jargon, no internal notes, no research dump.</p></div>
           </div>
-          <div>
-            <h4>Output</h4>
-            <p>Plain-English “why this action” note, impact summary, objections, and CRM-ready advisor brief.</p>
-          </div>
-        </div>
-        <h4>Why this matters for Dezerv</h4>
-        <p>Dezerv’s promise depends on active portfolio management. The more active the portfolio, the more clients need confidence that decisions are thoughtful, personalized, and outcome-led.</p>
-      </article>
-    </section>
-  </main>
+        </section>
+      </section>
 
-  <div id="toast">Copied founder note</div>
+      <section class="view" id="client">
+        <section class="phone-wrap">
+          <div class="phone">
+            <div class="phone-header">Dezerv portfolio update</div>
+            <div class="client-update">
+              <p class="eyebrow">What changed</p>
+              <h3>We reduced your mid-cap allocation by 6%</h3>
+              <p>Part of this amount has been moved to short-duration debt to reduce near-term volatility and preserve liquidity.</p>
+            </div>
+            <div class="client-update">
+              <p class="eyebrow">Why this matters</p>
+              <p>Mid-cap valuations have become expensive relative to risk. Since you have a planned liquidity need, this adjustment creates a safer buffer without changing your long-term growth plan.</p>
+            </div>
+            <div class="client-update">
+              <p class="eyebrow">Impact on your plan</p>
+              <div class="impact-row"><span>Risk</span><strong>Lower</strong></div>
+              <div class="impact-row"><span>Liquidity</span><strong>Higher</strong></div>
+              <div class="impact-row"><span>Long-term strategy</span><strong>Unchanged</strong></div>
+            </div>
+            <button class="primary-btn wide">Ask my advisor a question</button>
+          </div>
+
+          <div class="panel explanation-panel">
+            <p class="eyebrow">Client-facing experience</p>
+            <h3>What the client sees</h3>
+            <p>The client does not see internal research, prompts, or advisor notes. They only see a clear explanation of what changed, why it changed, and what it means for their plan.</p>
+            <p>This can live inside the Dezerv client app, as a WhatsApp message, or as an email summary sent by the advisor.</p>
+          </div>
+        </section>
+      </section>
+
+      <section class="view" id="timeline">
+        <section class="panel">
+          <p class="eyebrow">Decision audit trail</p>
+          <h3>Portfolio decision timeline</h3>
+          <div class="timeline">
+            <div class="timeline-item">
+              <span>Today</span>
+              <h4>Reduced mid-cap exposure by 6%</h4>
+              <p>Reason: valuation expansion, volatility risk, upcoming liquidity need.</p>
+            </div>
+            <div class="timeline-item">
+              <span>Last month</span>
+              <h4>Added short-duration debt allocation</h4>
+              <p>Reason: improved yield opportunity and liquidity planning.</p>
+            </div>
+            <div class="timeline-item">
+              <span>Previous quarter</span>
+              <h4>Trimmed duplicated financial services exposure</h4>
+              <p>Reason: fund overlap and concentration risk.</p>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast">Copied</div>
   <script src="script.js"></script>
 </body>
 </html>

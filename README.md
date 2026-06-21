@@ -1,79 +1,58 @@
-# Portfolio Decision Copilot - Dezerv PM MVP
+# Dezerv Advisor Copilot
 
-A lightweight, deployable prototype that shows how Dezerv could explain active portfolio actions to clients and advisors at scale.
+A lightweight advisor-facing prototype for Dezerv.
 
-## The product problem
+## Product idea
 
-Active wealth management builds trust only when clients understand *why* portfolio actions are taken.
+Active portfolio management creates a communication challenge: every portfolio action needs to be explained to HNI clients in a way that is clear, personalized, and trust-building.
 
-When Dezerv rebalances, trims exposure, raises liquidity, or changes strategy, an HNI client may ask:
+This prototype shows an **internal Advisor Copilot** that helps a relationship manager convert investment decisions into:
 
-- What changed in my portfolio?
-- Why was this action taken now?
-- Does this reduce my returns?
-- How is my portfolio different from another investor's?
+- WhatsApp-ready client explanation
+- Email-ready client explanation
+- Advisor talking points
+- Client-facing portfolio update preview
+- Decision timeline / audit trail
 
-Today, this explanation can become manual advisor effort. This copilot turns an investment decision into a clear client narrative, advisor talking points, objection handling, risk flags, and a decision timeline.
+## Intended user split
 
-## MVP demo
+### Advisor sees
 
-The prototype includes:
-
-- Client briefing view
-- Advisor console
-- Risk flags
+- Client context
+- Portfolio action
+- Advisor notes
+- Objection handling
+- WhatsApp and email drafts
 - Decision timeline
-- Narrative tone regeneration
-- Copyable founder note
 
-## How to run locally
+### Client sees
 
-Open `index.html` in any browser. No backend, installation, or API key required.
+- What changed
+- Why it changed
+- Impact on their plan
+- Option to ask advisor a question
 
-## How to deploy on GitHub Pages
+The product is intentionally **advisor-assisted**, not fully self-serve. The advisor reviews before sending.
 
-1. Create a new public GitHub repository, for example: `dezerv-portfolio-copilot`.
-2. Upload these files to the repository root:
-   - `index.html`
-   - `styles.css`
-   - `script.js`
-   - `README.md`
-3. Go to **Settings > Pages**.
-4. Under **Build and deployment**, choose:
-   - Source: `Deploy from a branch`
-   - Branch: `main`
-   - Folder: `/root`
-5. Save.
-6. GitHub will give you a public link like:
-   `https://YOUR_USERNAME.github.io/dezerv-portfolio-copilot/`
+## Deploy on GitHub Pages
 
-## How to deploy with command line
+1. Upload these files to your existing `dezerv-portfolio-copilot` GitHub repository.
+2. Commit the changes to `main`.
+3. Go to **Settings → Pages**.
+4. Source: **Deploy from a branch**.
+5. Branch: **main**, folder: **/ root**.
+6. Save and refresh after a minute.
 
-```bash
-git init
-git add .
-git commit -m "Add Dezerv portfolio decision copilot MVP"
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/dezerv-portfolio-copilot.git
-git push -u origin main
-```
+## Founder message
 
-Then enable GitHub Pages from repository settings.
+Hi Vaibhav,
 
-## Suggested message to Vaibhav
+I applied for the Product Manager role at Dezerv, but wanted to go beyond just sharing my profile.
 
-Hi Vaibhav, I applied for the PM role at Dezerv and wanted to show how I think about the product.
+I noticed that active portfolio management creates an explainability challenge for relationship managers: how do advisors explain portfolio actions to HNI clients quickly, clearly, and consistently without increasing manual workload?
 
-I noticed that active wealth management creates an explainability challenge: clients need to understand why portfolio actions are taken, and advisors need to communicate those decisions consistently.
+I built a quick working prototype around that idea: an Advisor Copilot that converts portfolio decisions into client-ready WhatsApp/email explanations, advisor notes, and a decision timeline.
 
-So I built a quick prototype called Portfolio Decision Copilot. It turns portfolio actions into client-ready narratives, advisor talking points, risk flags, and a decision timeline.
+Sharing it here: <your link>
 
-Would love to share it and get your feedback: [insert link]
-
-## Next version
-
-- Add input form for investment committee note + portfolio action
-- Generate client note, advisor brief, and compliance-safe summary
-- Add multiple investor personas
-- Add downloadable PDF client report
-- Add CRM-style decision history
+Would love your feedback.
